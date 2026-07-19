@@ -1,5 +1,7 @@
 import { createClient } from "@supabase/supabase-js"
 
+import type { Database } from "@/types/database"
+
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
 
@@ -10,7 +12,7 @@ if (!supabaseUrl || !supabaseKey) {
 }
 
 /**
- * No schema exists yet (Phase 2 builds the database). This client is wired
- * for connectivity only — every table/RPC call comes in a later phase.
+ * Typed against the live schema (src/types/database.ts, regenerated after
+ * every migration). No auth session handling yet — that's Phase 3.
  */
-export const supabase = createClient(supabaseUrl, supabaseKey)
+export const supabase = createClient<Database>(supabaseUrl, supabaseKey)
