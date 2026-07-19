@@ -1,21 +1,21 @@
 import { useNavigate, useParams } from "react-router-dom"
 import {
   ArrowLeft,
-  Calculator,
   Clock,
   FolderOpen,
   History as HistoryIcon,
-  ListChecks,
   Sparkles,
   Trash2,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { BoqTab } from "@/features/tenders/components/boq-tab"
 import { ChecklistTab } from "@/features/tenders/components/checklist-tab"
 import { NotesTab } from "@/features/tenders/components/notes-tab"
 import { OverviewTab } from "@/features/tenders/components/overview-tab"
 import { PlaceholderTab } from "@/features/tenders/components/placeholder-tab"
+import { PricingTab } from "@/features/tenders/components/pricing-tab"
 import { SubmissionTab } from "@/features/tenders/components/submission-tab"
 import { SuppliersTab } from "@/features/tenders/components/suppliers-tab"
 import { TasksTab } from "@/features/tenders/components/tasks-tab"
@@ -118,18 +118,10 @@ export function TenderWorkspacePage() {
           />
         </TabsContent>
         <TabsContent value="boq">
-          <PlaceholderTab
-            icon={ListChecks}
-            title="Bill of Quantities"
-            description="Building the BOQ for this tender lands with the BOQ Builder module."
-          />
+          <BoqTab tenderId={tender.id} />
         </TabsContent>
         <TabsContent value="pricing">
-          <PlaceholderTab
-            icon={Calculator}
-            title="Pricing"
-            description="Cost, markup, and margin calculations land with the Pricing Engine module."
-          />
+          <PricingTab tenderId={tender.id} />
         </TabsContent>
         <TabsContent value="suppliers">
           <SuppliersTab tenderId={tender.id} />
