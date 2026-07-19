@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom"
 import {
   ArrowLeft,
-  Building2,
   Calculator,
   Clock,
   FolderOpen,
@@ -18,6 +17,7 @@ import { NotesTab } from "@/features/tenders/components/notes-tab"
 import { OverviewTab } from "@/features/tenders/components/overview-tab"
 import { PlaceholderTab } from "@/features/tenders/components/placeholder-tab"
 import { SubmissionTab } from "@/features/tenders/components/submission-tab"
+import { SuppliersTab } from "@/features/tenders/components/suppliers-tab"
 import { TasksTab } from "@/features/tenders/components/tasks-tab"
 import { TenderStatusBadge } from "@/features/tenders/components/tender-status-badge"
 import { useDeleteTender, useTender } from "@/features/tenders/hooks/use-tenders"
@@ -132,11 +132,7 @@ export function TenderWorkspacePage() {
           />
         </TabsContent>
         <TabsContent value="suppliers">
-          <PlaceholderTab
-            icon={Building2}
-            title="Suppliers"
-            description="Linking suppliers to this tender lands with the Supplier Intelligence module."
-          />
+          <SuppliersTab tenderId={tender.id} />
         </TabsContent>
         <TabsContent value="tasks">
           <TasksTab tenderId={tender.id} />

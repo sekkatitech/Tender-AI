@@ -184,3 +184,40 @@ export async function createSubmission(
   if (error) throw error
   return data
 }
+
+// ── Linked suppliers ─────────────────────────────────────────────────────
+
+export interface TenderSupplierLink {
+  id: string
+  status: string | null
+  notes: string | null
+  supplier_id: string
+  suppliers: { id: string; name: string }
+}
+
+export async function listTenderSuppliers(tenderId: string): Promise<TenderSupplierLink[]> {
+  const { data, error } = await supabase
+    .from("tender_suppliers")
+    .select("id, status, notes, supplier_id, suppliers(id, name)")
+    .eq("tender_id", tenderId)
+  if (error) throw error
+  return data
+}
+
+export async function linkSupplier(input: {
+  tenderId: string
+  companyId: string
+  supplierId: string
+}): Promise<void> {
+  const { error } = await supabase.from("tender_suppliers").insert({
+    tender_id: input.tenderId,
+    company_id: input.companyId,
+    supplier_id: input.supplierId,
+  })
+  if (error) throw error
+}
+
+export async function unlinkSupplier(id: string): Promise<void> {
+  const { error } = await supabase.from("tender_suppliers").delete().eq("id", id)
+  if (error) throw error
+}

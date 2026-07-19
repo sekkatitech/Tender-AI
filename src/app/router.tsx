@@ -22,13 +22,13 @@ import { PricingPage } from "@/features/pricing"
 import { ProjectsPage } from "@/features/projects"
 import { ReportsPage } from "@/features/reports"
 import { SettingsPage } from "@/features/settings"
-import { SuppliersPage } from "@/features/suppliers"
+import { SuppliersListPage, SupplierWorkspacePage } from "@/features/suppliers"
 import { TendersListPage, TenderWorkspacePage } from "@/features/tenders"
 
 const MODULE_PAGES: Record<string, ComponentType> = {
   dashboard: DashboardPage,
   tenders: TendersListPage,
-  suppliers: SuppliersPage,
+  suppliers: SuppliersListPage,
   pricing: PricingPage,
   boq: BoqPage,
   compliance: CompliancePage,
@@ -63,6 +63,7 @@ export function AppRouter() {
           return <Route key={mod.id} path={mod.path} element={<Page />} />
         })}
         <Route path="/tenders/:tenderId" element={<TenderWorkspacePage />} />
+        <Route path="/suppliers/:supplierId" element={<SupplierWorkspacePage />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
