@@ -1,1 +1,2 @@
-export { TendersPage } from "./pages/TendersPage"
+export { TendersListPage } from "./pages/TendersListPage"
+export { TenderWorkspacePage } from "./pages/TenderWorkspacePage"
