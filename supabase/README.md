@@ -37,6 +37,19 @@ one.
 | `audit_logs` | `audit_logs` (read-only for clients) |
 | `storage_buckets` | `documents` and `price-lists` storage buckets + RLS |
 | `security_performance_hardening` | Fixes from `get_advisors`: pinned `search_path`, tightened `get_my_company_id()` grants, missing FK indexes, `(select auth.uid())` in RLS policies |
+| `handle_new_user` | Signup trigger — creates one `companies` row + one `owner` `profiles` row per new `auth.users` row. Still the only way in: `companies`/`profiles` have no client-facing insert policy |
+| `lock_down_handle_new_user` | Revokes direct RPC execute on `handle_new_user()` — it should only ever fire via the trigger |
+
+## Auth / signup
+
+Minimal functional auth (not the full polished Phase 3 — no MFA, no custom
+email templates): `src/app/providers/auth-context.tsx` wraps
+`supabase.auth`, and `/signup` passes the company name via
+`options.data.company_name`, which the `handle_new_user` trigger reads to
+create the company + owner profile. Whether signup logs the user in
+immediately or requires an email-confirmation click first depends on the
+project's Auth setting (Authentication → Providers → Email in the Supabase
+dashboard) — not something scriptable via the available tooling.
 
 ## Storage
 
