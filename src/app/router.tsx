@@ -15,7 +15,7 @@ import { BoqPage } from "@/features/boq"
 import { CompliancePage } from "@/features/compliance"
 import { CrmPage } from "@/features/crm"
 import { DashboardPage } from "@/features/dashboard"
-import { DocumentsPage } from "@/features/documents"
+import { DocumentsLibraryPage } from "@/features/documents"
 import { KnowledgeBasePage } from "@/features/knowledge-base"
 import { NotificationsPage } from "@/features/notifications"
 import { PricingPage } from "@/features/pricing"
@@ -32,7 +32,7 @@ const MODULE_PAGES: Record<string, ComponentType> = {
   pricing: PricingPage,
   boq: BoqPage,
   compliance: CompliancePage,
-  documents: DocumentsPage,
+  documents: DocumentsLibraryPage,
   "knowledge-base": KnowledgeBasePage,
   reports: ReportsPage,
   notifications: NotificationsPage,

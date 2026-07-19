@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom"
 import {
   ArrowLeft,
   Clock,
-  FolderOpen,
   History as HistoryIcon,
   Sparkles,
   Trash2,
@@ -12,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BoqTab } from "@/features/tenders/components/boq-tab"
 import { ChecklistTab } from "@/features/tenders/components/checklist-tab"
+import { DocumentsTab } from "@/features/tenders/components/documents-tab"
 import { NotesTab } from "@/features/tenders/components/notes-tab"
 import { OverviewTab } from "@/features/tenders/components/overview-tab"
 import { PlaceholderTab } from "@/features/tenders/components/placeholder-tab"
@@ -111,11 +111,7 @@ export function TenderWorkspacePage() {
           <ChecklistTab tenderId={tender.id} />
         </TabsContent>
         <TabsContent value="documents">
-          <PlaceholderTab
-            icon={FolderOpen}
-            title="Documents"
-            description="Uploading and versioning tender documents lands with the Document Management module."
-          />
+          <DocumentsTab tenderId={tender.id} />
         </TabsContent>
         <TabsContent value="boq">
           <BoqTab tenderId={tender.id} />
