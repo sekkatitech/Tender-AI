@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NOVA AI 2.0 – Design Board</title>
+    <style>
+      :root {
+        --bg: #070f1d;
+        --bg-2: #0d1b2d;
+        --panel: rgba(20, 35, 52, 0.96);
+        --panel-2: rgba(17, 30, 42, 0.95);
+        --card: rgba(23, 39, 57, 0.98);
+        --muted: #a5b4c8;
+        --text: #edf5ff;
+        --cyan: #00d6ff;
+        --blue: #2789ff;
+        --green: #21d18b;
+        --amber: #f7b955;
+        --red: #ff6d6d;
+        --line: rgba(165, 180, 200, 0.18);
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: radial-gradient(circle at top, rgba(0,214,255,0.10), transparent 20%),
+                    linear-gradient(180deg, #040a12 0%, #0a1020 32%, #071422 100%);
+        color: var(--text);
+        font-family: Inter, "Segoe UI", sans-serif;
+        padding: 32px;
+      }
+
+      .board {
+        max-width: 1440px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 28px;
+      }
+
+      .phone {
+        width: 390px;
+        max-width: 100%;
+        min-height: 844px;
+        border-radius: 34px;
+        background: linear-gradient(180deg, #081724 0%, #0d1f31 100%);
+        border: 1px solid rgba(160, 192, 255, 0.18);
+        box-shadow: 0 30px 60px rgba(0,0,0,0.35);
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 18px 12px;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .topbar .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text);
+        letter-spacing: 0.08em;
+        font-weight: 800;
+      }
+
+      .brand-mark {
+        width: 20px;
+        height: 20px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, var(--cyan), var(--blue));
+        position: relative;
+        transform: rotate(-45deg);
+        box-shadow: 0 0 14px rgba(0,214,255,0.45);
+      }
+
+      .brand-mark::before {
+        content: "";
+        position: absolute;
+        inset: 5px;
+        border: 2px solid rgba(255,255,255,0.8);
+        border-radius: 4px;
+      }
+
+      .screen {
+        padding: 0 18px 92px;
+      }
+
+      .hero {
+        background: linear-gradient(180deg, rgba(12, 27, 39, 0.9), rgba(17, 31, 44, 0.92));
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 18px 18px 12px;
+      }
+
+      .sync {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 4px 2px 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .sync strong {
+        color: var(--cyan);
+      }
+
+      .avatar-ring {
+        width: 173px;
+        height: 173px;
+        margin: 8px auto 18px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 50% 35%, rgba(0,214,255,0.35), rgba(16,55,80,0.4) 40%, rgba(7,13,20,0.9) 70%);
+        border: 3px solid rgba(0,214,255,0.72);
+        position: relative;
+        box-shadow: 0 0 0 10px rgba(0,214,255,0.08), inset 0 0 30px rgba(0,214,255,0.18);
+      }
+
+      .avatar-ring::before {
+        content: "";
+        position: absolute;
+        inset: 18px;
+        border-radius: 50%;
+        background: linear-gradient(180deg, rgba(210, 230, 245, 0.9), rgba(83, 104, 126, 0.9));
+        box-shadow: inset 0 0 18px rgba(4, 7, 18, 0.28);
+      }
+
+      .avatar-ring::after {
+        content: "";
+        position: absolute;
+        inset: 38px 28px 26px;
+        border-radius: 46% 46% 42% 42%;
+        background: linear-gradient(180deg, rgba(0,214,255,0.14), rgba(0,0,0,0));
+      }
+
+      .hero-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-top: 10px;
+      }
+
+      .headline {
+        margin-top: 18px;
+        font-weight: 800;
+        letter-spacing: -0.05em;
+      }
+      .headline .kicker {
+        color: var(--cyan);
+        display: block;
+        font-size: 14px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .headline h2 {
+        font-size: 30px;
+        line-height: 0.98;
+        margin: 0;
+      }
+      .headline p {
+        margin-top: 14px;
+        color: var(--muted);
+        font-weight: 500;
+        letter-spacing: -0.02em;
+        font-size: 18px;
+        line-height: 1.45;
+      }
+
+      .card-list {
+        margin-top: 18px;
+        background: rgba(19, 34, 49, 0.9);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        overflow: hidden;
+      }
+
+      .list-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 16px 18px;
+        border-bottom: 1px solid rgba(165,180,200,0.1);
+      }
+      .list-item:last-child { border-bottom: none; }
+      .list-item .left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+      .list-item h4 {
+        margin: 0;
+        font-size: 18px;
+        letter-spacing: -0.04em;
+      }
+      .list-item small {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 4px;
+      }
+      .mini {
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, rgba(0,214,255,0.18), rgba(39,137,255,0.18));
+        border: 1px solid rgba(0,214,255,0.4);
+        display: grid;
+        place-items: center;
+        color: var(--cyan);
+        font-weight: 900;
+      }
+      .chev {
+        font-size: 28px;
+        color: var(--cyan);
+        line-height: 1;
+      }
+
+      .cta {
+        margin-top: 18px;
+        width: 100%;
+        height: 56px;
+        border: none;
+        border-radius: 18px;
+        color: #062b3d;
+        background: linear-gradient(180deg, #29d9ff 0%, #20c4f2 100%);
+        font-size: 18px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        box-shadow: 0 18px 26px rgba(0,214,255,0.2);
+      }
+      .secondary {
+        margin-top: 12px;
+        width: 100%;
+        height: 52px;
+        border: 1px solid rgba(146, 174, 214, 0.26);
+        border-radius: 18px;
+        background: rgba(18, 30, 44, 0.84);
+        color: var(--text);
+        font-size: 17px;
+        font-weight: 700;
+      }
+
+      .chip-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+      }
+      .chip {
+        border-radius: 999px;
+        padding: 8px 10px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 20px;
+      }
+      .metric {
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: rgba(21, 34, 49, 0.9);
+        padding: 14px 14px 12px;
+      }
+      .metric h5 {
+        margin: 0 0 14px;
+        color: var(--muted);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .metric strong {
+        display: block;
+        font-size: 34px;
+        letter-spacing: -0.07em;
+      }
+      .metric span {
+        display: block;
+        color: var(--muted);
+        margin-top: 6px;
+        font-size: 12px;
+      }
+
+      .alert-box {
+        margin-top: 18px;
+        padding: 14px 16px;
+        border-radius: 18px;
+        border: 1px solid rgba(255,109,109,0.2);
+        background: rgba(90, 20, 29, 0.18);
+      }
+      .alert-box .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--muted);
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+      .tag {
+        border-radius: 999px;
+        padding: 6px 8px;
+        font-size: 11px;
+        font-weight: 700;
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+      .tag.green { background: rgba(33,209,139,0.12); color: var(--green); }
+      .tag.blue { background: rgba(0,214,255,0.12); color: var(--cyan); }
+      .tag.red { background: rgba(255,109,109,0.12); color: var(--red); }
+
+      .chat-box {
+        margin-top: 18px;
+        background: rgba(19, 33, 47, 0.9);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      .bubble {
+        max-width: 80%;
+        margin: 12px 14px;
+        padding: 12px 14px;
+        border-radius: 18px;
+        line-height: 1.5;
+        font-size: 14px;
+      }
+      .bubble.user {
+        margin-left: auto;
+        background: linear-gradient(135deg, rgba(0,214,255,0.22), rgba(39,137,255,0.2));
+      }
+      .bubble.ai {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+
+      .input {
+        display: flex;
+        gap: 10px;
+        padding: 12px 14px 14px;
+      }
+      .input input {
+        flex: 1;
+        height: 42px;
+        border-radius: 999px;
+        border: 1px solid rgba(146, 174, 214, 0.2);
+        background: rgba(255,255,255,0.04);
+        color: var(--text);
+        padding: 0 14px;
+        outline: none;
+      }
+      .send {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: none;
+        background: linear-gradient(135deg, var(--cyan), var(--blue));
+        color: #07192a;
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .nav {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 90px;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        padding: 10px 10px 18px;
+        background: rgba(8, 17, 25, 0.92);
+        border-top: 1px solid rgba(150, 174, 206, 0.13);
+      }
+      .nav .item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .nav .item.active { color: var(--cyan); }
+      .nav .icon {
+        width: 30px;
+        height: 30px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.04);
+      }
+      .nav .item.active .icon {
+        background: rgba(0,214,255,0.12);
+        border-color: rgba(0,214,255,0.28);
+      }
+
+      .scanner {
+        padding: 10px 0 0;
+      }
+      .capture {
+        height: 366px;
+        position: relative;
+        margin-top: 12px;
+        border-radius: 22px;
+        border: 1px solid rgba(0,214,255,0.5);
+        background: linear-gradient(135deg, rgba(35,45,56,0.8), rgba(17,24,31,0.8));
+        overflow: hidden;
+      }
+      .capture::before {
+        content: "";
+        position: absolute;
+        inset: 24px 42px;
+        border: 2px solid rgba(0,214,255,0.9);
+        border-radius: 10px;
+      }
+      .capture::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(45deg, rgba(255,255,255,0.08), transparent 30% 70%, rgba(255,255,255,0.08));
+      }
+      .corner-dock {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 18px;
+      }
+      .corner-box {
+        width: 42px;
+        height: 42px;
+        border: 2px solid rgba(0,214,255,0.8);
+        border-radius: 10px;
+      }
+      .scan-toggle {
+        margin-top: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 10px;
+        border-radius: 18px;
+        background: rgba(17, 31, 45, 0.9);
+        border: 1px solid var(--line);
+      }
+      .scan-toggle .switch {
+        width: 62px;
+        height: 30px;
+        border-radius: 999px;
+        background: rgba(0,214,255,0.18);
+        border: 1px solid rgba(0,214,255,0.35);
+        position: relative;
+      }
+      .scan-toggle .switch::before {
+        content: "";
+        position: absolute;
+        right: 4px;
+        top: 3px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--cyan), var(--blue));
+      }
+
+      .title-box {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+      .result-box {
+        margin-top: 18px;
+        padding: 16px 14px;
+        background: rgba(16, 28, 36, 0.9);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+      }
+
+      .alert-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(165,180,200,0.1);
+      }
+      .alert-row:last-child { border-bottom: none; }
+
+      .profile-card {
+        border: 1px solid var(--line);
+        background: rgba(17, 31, 45, 0.9);
+        border-radius: 20px;
+        padding: 16px;
+      }
+      .profile-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .profile-avatar {
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        background: linear-gradient(180deg, rgba(210,230,245,0.82), rgba(76,94,120,0.82));
+      }
+      .profile-list {
+        margin-top: 18px;
+        display: grid;
+        gap: 12px;
+      }
+      .profile-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(165,180,200,0.08);
+      }
+      .profile-item:last-child { border-bottom: none; }
+      .profile-button {
+        margin-top: 18px;
+        width: 100%;
+        height: 52px;
+        border-radius: 16px;
+        border: 1px solid rgba(255,109,109,0.22);
+        background: rgba(90, 20, 29, 0.2);
+        color: #ff9fa5;
+        font-weight: 800;
+      }
+
+      .section-tag {
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="board">
+      <div class="phone">
+        <div class="topbar">
+          <div class="brand"><span class="brand-mark"></span> TENDERPILOT</div>
+          <div class="pill" style="background: rgba(0,214,255,0.08); border: 1px solid rgba(0,214,255,0.2); color: var(--cyan); padding: 6px 10px; border-radius: 999px; font-size: 10px;">v2.4 RSA</div>
+        </div>
+        <div class="screen">
+          <div class="hero">
+            <div class="sync"><span>L-01</span><strong>AI:SYNCED</strong><span>R-09</span></div>
+            <div class="avatar-ring"></div>
+            <div class="hero-row"><span>99.8%</span><span>Active</span></div>
+          </div>
+          <div class="headline">
+            <span class="kicker">Procurement intelligence</span>
+            <h2>Meet NOVA.</h2>
+            <p>Your intelligent procurement companion, wherever business takes you.</p>
+          </div>
+          <div class="card-list">
+            <div class="list-item">
+              <div class="left">
+                <div class="mini">⚡</div>
+                <div>
+                  <h4>Real-time Tender Tracking</h4>
+                  <small>eTenders • CIDB Registers • 257 Municipalities</small>
+                </div>
+              </div>
+              <div class="chev">›</div>
+            </div>
+            <div class="list-item">
+              <div class="left">
+                <div class="mini">🛡</div>
+                <div>
+                  <h4>NOVA Bid Copilot &amp; Compliance</h4>
+                  <small>CSD, B-BBEE Scorecard &amp; PPPFA Scoring</small>
+                </div>
+              </div>
+              <div class="chev">›</div>
+            </div>
+            <div class="list-item">
+              <div class="left">
+                <div class="mini">📄</div>
+                <div>
+                  <h4>Smart Document HUD Extraction</h4>
+                  <small>Instant RFP breakdown &amp; mandatory gate checks</small>
+                </div>
+              </div>
+              <div class="chev">›</div>
+            </div>
+          </div>
+          <button class="cta">Get Started with TenderPilot</button>
+          <button class="secondary">Sign In with Enterprise SSO</button>
+          <div class="chip-group">
+            <span class="chip">POPIA Certified</span>
+            <span class="chip">Enterprise RSA</span>
+          </div>
+        </div>
+        <div class="nav">
+          <div class="item"><div class="icon">⌂</div><div>Home</div></div>
+          <div class="item"><div class="icon">▣</div><div>Tenders</div></div>
+          <div class="item active"><div class="icon">✦</div><div>NOVA</div></div>
+          <div class="item"><div class="icon">🔔</div><div>Alerts</div></div>
+          <div class="item"><div class="icon">◉</div><div>Profile</div></div>
+        </div>
+      </div>
+
+      <div class="phone">
+        <div class="topbar">
+          <div class="brand"><span class="brand-mark"></span> NOVA AI</div>
+          <div style="color: var(--green); font-weight: 800;">● Online</div>
+        </div>
+        <div class="screen">
+          <div class="hero" style="padding: 20px 16px 14px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
+              <div>
+                <div class="section-tag" style="margin-bottom: 8px;">Executive briefing</div>
+                <h3 style="margin:0; font-size: 28px; letter-spacing: -0.06em;">Good morning, Thabo</h3>
+                <p style="margin:10px 0 0; color: var(--muted); font-size: 14px;">I’m NOVA. You have 3 urgent bids requiring executive review today.</p>
+              </div>
+              <div class="profile-avatar" style="width: 64px; height: 64px; border-radius: 50%;"></div>
+            </div>
+          </div>
+          <div class="metrics">
+            <div class="metric"><h5>Active Tenders</h5><strong>14</strong><span>R84.2M pipeline</span></div>
+            <div class="metric"><h5>Closing Soon</h5><strong>3</strong><span>48h: Eskom Solar</span></div>
+            <div class="metric"><h5>Compliance</h5><strong>2</strong><span>1 B-BBEE in 12d</span></div>
+            <div class="metric"><h5>Sign-offs</h5><strong>4</strong><span>2 sign-offs needed</span></div>
+          </div>
+          <div class="section-tag" style="margin-top: 18px;">Quick actions</div>
+          <div class="chip-group">
+            <span class="chip">Ask NOVA</span>
+            <span class="chip">Scan Document</span>
+            <span class="chip">View Tenders</span>
+            <span class="chip">Review Alerts</span>
+          </div>
+          <div class="section-tag" style="margin-top: 18px;">Urgent tender deadlines</div>
+          <div class="alert-box">
+            <div class="top"><span class="tag blue">TPT/2025/CT/0892</span><span class="tag green">94% Match</span></div>
+            <h3 style="margin: 8px 0 8px; font-size: 26px; letter-spacing: -0.05em; line-height: 1.1;">Transnet Port Terminal: Heavy Crane Overhaul &amp; Maintenance</h3>
+            <div style="color: var(--muted); font-size: 13px;">Closing: Tomorrow, 11:00 AM</div>
+            <div style="margin-top: 12px; background: rgba(255,255,255,0.04); border-radius: 12px; padding: 10px;">
+              <div style="display:flex; justify-content:space-between; color: var(--muted); font-size:12px; margin-bottom: 8px;"><span>Compliance Verification</span><span>85%</span></div>
+              <div style="height: 8px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow:hidden;"><div style="width: 85%; height:100%; background: linear-gradient(90deg, var(--green), #8ee8af);"></div></div>
+            </div>
+            <div class="chip-group">
+              <span class="chip">View Dossier</span>
+              <span class="chip">Sign Off Now</span>
+            </div>
+          </div>
+        </div>
+        <div class="nav">
+          <div class="item"><div class="icon">⌂</div><div>Home</div></div>
+          <div class="item"><div class="icon">▣</div><div>Tenders</div></div>
+          <div class="item active"><div class="icon">✦</div><div>NOVA</div></div>
+          <div class="item"><div class="icon">🔔</div><div>Alerts</div></div>
+          <div class="item"><div class="icon">◉</div><div>Profile</div></div>
+        </div>
+      </div>
+
+      <div class="phone">
+        <div class="topbar">
+          <div class="brand"><span class="brand-mark"></span> NOVA AI</div>
+          <div style="color: var(--green); font-weight: 800;">● Online</div>
+        </div>
+        <div class="screen">
+          <div class="chat-box">
+            <div class="bubble user">What documents are missing for the Transnet Crane tender?</div>
+            <div class="bubble ai" style="margin-top: 0;">
+              <strong style="color: var(--cyan); display:block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.1em; font-size: 11px;">NOVA AI Engine</strong>
+              Tender dossier deep scan • <strong style="color: var(--green);">98% Confidence</strong>
+            </div>
+            <div class="bubble ai" style="margin-top: 0;">
+              Annexure C — Local Content Declaration (SATS 1286:2011) document uploaded in Envelope 2 is missing authorized executive signature and Commissioner of Oaths stamp on Page 4. Submission threshold required: 100% locally fabricated structural steel.
+            </div>
+            <div class="bubble ai" style="margin-top: 0; margin-bottom: 14px;">
+              Verified vault credentials: SARS Tax ... Verified • B-BBEE ... Level 1 • COIDA ... Valid &amp; Certified
+            </div>
+          </div>
+          <div class="section-tag" style="margin-top: 20px;">Recommended remediation</div>
+          <div class="stack" style="margin-top: 12px; gap: 12px;">
+            <button class="secondary">Scan &amp; Upload Signed Annexure C</button>
+            <button class="secondary">Generate Completed Declaration via NOVA</button>
+            <button class="secondary">View Full Tender Dossier</button>
+          </div>
+          <div class="input" style="margin-top: 18px;">
+            <input value="Ask NOVA anything you do" />
+            <button class="send">➤</button>
+          </div>
+        </div>
+        <div class="nav">
+          <div class="item"><div class="icon">⌂</div><div>Home</div></div>
+          <div class="item"><div class="icon">▣</div><div>Tenders</div></div>
+          <div class="item active"><div class="icon">✦</div><div>NOVA</div></div>
+          <div class="item"><div class="icon">🔔</div><div>Alerts</div></div>
+          <div class="item"><div class="icon">◉</div><div>Profile</div></div>
+        </div>
+      </div>
+
+      <div class="phone">
+        <div class="topbar">
+          <div class="brand"><span class="brand-mark"></span> NOVA AI</div>
+          <div style="color: var(--green); font-weight: 800;">● Online</div>
+        </div>
+        <div class="screen">
+          <div class="section-tag" style="margin-top: 12px;">Search by title, reference, or organ of state</div>
+          <div class="chip-group" style="margin-bottom: 16px;">
+            <span class="chip">Active (14)</span>
+            <span class="chip">Closing soon (3)</span>
+            <span class="chip">Submitted (8)</span>
+          </div>
+          <div class="alert-box" style="margin-top: 0; background: rgba(19,31,46,0.9); border-color: rgba(0,214,255,0.22);">
+            <div class="top"><span class="tag blue">R100.5M</span><span class="tag green">2 new fits</span></div>
+            <h3 style="margin: 10px 0; font-size: 26px; line-height: 1.08; letter-spacing: -0.05em;">Transnet Freight Rail: Substation Switchgear Upgrade &amp; SCADA...</h3>
+            <div style="color: var(--muted); font-size: 13px;">TFR/2025/HQ/0149 • Transnet SOC Ltd • Closing: 28 Feb 2025</div>
+            <div style="margin-top: 12px; background: rgba(255,255,255,0.04); border-radius: 12px; padding: 10px;">
+              <div style="display:flex; justify-content:space-between; color: var(--muted); font-size:12px; margin-bottom: 8px;"><span>Compliance Readiness</span><span>92%</span></div>
+              <div style="height: 8px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow:hidden;"><div style="width: 92%; height:100%; background: linear-gradient(90deg, var(--green), #81dfb5);"></div></div>
+            </div>
+            <div class="chip-group" style="margin-top: 12px;"><span class="chip">Open Dossier</span><span class="chip">View fit</span></div>
+          </div>
+          <div class="alert-box" style="margin-top: 14px; background: rgba(19,31,46,0.9); border-color: rgba(0,214,255,0.22);">
+            <div class="top"><span class="tag blue">R62.0M</span><span class="tag red">16 days left</span></div>
+            <h3 style="margin: 10px 0; font-size: 26px; line-height: 1.08; letter-spacing: -0.05em;">SANRAL: N2 Highway Intelligent Transport System &amp; Sensor Network</h3>
+            <div style="color: var(--muted); font-size: 13px;">NRA-N, 002-140-2024/1 • SANRAL • Closing: 12 Mar 2025</div>
+            <div style="margin-top: 12px; background: rgba(255,255,255,0.04); border-radius: 12px; padding: 10px;">
+              <div style="display:flex; justify-content:space-between; color: var(--muted); font-size:12px; margin-bottom: 8px;"><span>Compliance Readiness</span><span>68%</span></div>
+              <div style="height: 8px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow:hidden;"><div style="width: 68%; height:100%; background: linear-gradient(90deg, var(--amber), #f5d68a);"></div></div>
+            </div>
+            <div class="chip-group" style="margin-top: 12px;"><span class="chip">Mandatory pre-bid</span><span class="chip">View snapshot</span></div>
+          </div>
+        </div>
+        <div class="nav">
+          <div class="item"><div class="icon">⌂</div><div>Home</div></div>
+          <div class="item active"><div class="icon">▣</div><div>Tenders</div></div>
+          <div class="item"><div class="icon">✦</div><div>NOVA</div></div>
+          <div class="item"><div class="icon">🔔</div><div>Alerts</div></div>
+          <div class="item"><div class="icon">◉</div><div>Profile</div></div>
+        </div>
+      </div>
+
+      <div class="phone">
+        <div class="topbar">
+          <div class="brand"><span class="brand-mark"></span> Document Scan Hud</div>
+          <div style="color: var(--muted); font-weight: 800;">Close</div>
+        </div>
+        <div class="screen scanner">
+          <div class="scan-toggle">
+            <div style="display:flex; align-items:center; gap:8px; font-weight:700;">
+              <span style="font-size: 18px;">▣</span>
+              <span>Auto-scan</span>
+            </div>
+            <div class="switch"></div>
+          </div>
+          <div class="capture">
+            <div class="corner-dock">
+              <div class="corner-box"></div>
+              <div class="corner-box"></div>
+            </div>
+          </div>
+          <div class="title-box">Align edges of SBD document or Tax Certificate within frame</div>
+          <div class="result-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green);">
+              <span>Ready for review</span>
+              <span>OCR Engine v4.2</span>
+            </div>
+            <div style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">Standard bidding document</div>
+            <div style="font-size: 26px; line-height: 1.1; font-weight: 800; letter-spacing: -0.05em;">SBD 6.1 — Preference Points Claim Form</div>
+            <div class="chip-group" style="margin-top: 14px;">
+              <span class="chip">Confirm &amp; Attach to Tender</span>
+              <span class="chip">Retake or Edit Fields</span>
+            </div>
+          </div>
+        </div>
+        <div class="nav">
+          <div class="item"><div class="icon">⌂</div><div>Home</div></div>
+          <div class="item"><div class="icon">▣</div><div>Tenders</div></div>
+          <div class="item active"><div class="icon">✦</div><div>NOVA</div></div>
+          <div class="item"><div class="icon">🔔</div><div>Alerts</div></div>
+          <div class="item"><div class="icon">◉</div><div>Profile</div></div>
+        </div>
+      </div>
+
+      <div class="phone">
+        <div class="topbar">
+          <div class="brand"><span class="brand-mark"></span> NOVA AI</div>
+          <div style="color: var(--green); font-weight: 800;">● Online</div>
+        </div>
+        <div class="screen">
+          <div class="profile-card">
+            <div class="profile-header">
+              <div class="profile-avatar"></div>
+              <div>
+                <h3 style="margin:0; font-size: 30px; letter-spacing: -0.06em;">Thabo Mokoe...</h3>
+                <div style="color: var(--muted); margin-top: 6px;">Chief Executive &amp; Lead Bid Director</div>
+              </div>
+            </div>
+            <div class="profile-list">
+              <div class="profile-item"><span>Accreditation pass</span><span class="tag green">CSD Live</span></div>
+              <div class="profile-item"><span>Company</span><span>Apex Engineering HQ</span></div>
+              <div class="profile-item"><span>Connected policies</span><span>POPIA, RSA</span></div>
+              <div class="profile-item"><span>AI &amp; NOVA config</span><span>Autonomous</span></div>
+              <div class="profile-item"><span>Preferences</span><span>Dark mode</span></div>
+            </div>
+            <button class="profile-button">Sign Out of TenderPilot</button>
+          </div>
+        </div>
+        <div class="nav">
+          <div class="item"><div class="icon">⌂</div><div>Home</div></div>
+          <div class="item"><div class="icon">▣</div><div>Tenders</div></div>
+          <div class="item"><div class="icon">✦</div><div>NOVA</div></div>
+          <div class="item active"><div class="icon">🔔</div><div>Alerts</div></div>
+          <div class="item"><div class="icon">◉</div><div>Profile</div></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

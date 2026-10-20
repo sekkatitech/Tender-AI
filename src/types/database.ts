@@ -204,6 +204,57 @@ export type Database = {
         }
         Relationships: []
       }
+      company_invites: {
+        Row: {
+          accepted_at: string | null
+          company_id: string
+          created_at: string
+          email: string
+          expires_at: string
+          id: string
+          invited_by: string | null
+          role: Database["public"]["Enums"]["user_role"]
+          token: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          company_id: string
+          created_at?: string
+          email: string
+          expires_at?: string
+          id?: string
+          invited_by?: string | null
+          role?: Database["public"]["Enums"]["user_role"]
+          token?: string
+        }
+        Update: {
+          accepted_at?: string | null
+          company_id?: string
+          created_at?: string
+          email?: string
+          expires_at?: string
+          id?: string
+          invited_by?: string | null
+          role?: Database["public"]["Enums"]["user_role"]
+          token?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_invites_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_invites_invited_by_fkey"
+            columns: ["invited_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       crm_contacts: {
         Row: {
           company_id: string
@@ -1087,7 +1138,22 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_invite_preview: {
+        Args: { invite_token: string }
+        Returns: {
+          company_name: string
+          email: string
+          role: Database["public"]["Enums"]["user_role"]
+        }[]
+      }
       get_my_company_id: { Args: never; Returns: string }
+      list_company_member_emails: {
+        Args: never
+        Returns: {
+          email: string
+          id: string
+        }[]
+      }
     }
     Enums: {
       document_category:

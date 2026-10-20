@@ -32,3 +32,15 @@ export const TENDER_DOCUMENT_CATEGORIES: DocumentCategory[] = [
   "tender_submission",
   "tender_other",
 ]
+
+/** The categories the Knowledge Base module manages — company-wide, not tender-specific. */
+export const KNOWLEDGE_BASE_DOCUMENT_CATEGORIES: DocumentCategory[] = [
+  "company_profile",
+  "supplier_agreement",
+  "pricing_policy",
+  "proposal_template",
+  "reference_letter",
+  "technical_document",
+  "past_winning_tender",
+  "certificate",
+]

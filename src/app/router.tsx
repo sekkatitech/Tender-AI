@@ -17,6 +17,7 @@ import { CrmPage } from "@/features/crm"
 import { DashboardPage } from "@/features/dashboard"
 import { DocumentsLibraryPage } from "@/features/documents"
 import { KnowledgeBasePage } from "@/features/knowledge-base"
+import { LandingPage } from "@/features/landing"
 import { NotificationsPage } from "@/features/notifications"
 import { PricingPage } from "@/features/pricing"
 import { ProjectsPage } from "@/features/projects"
@@ -46,6 +47,7 @@ const MODULE_PAGES: Record<string, ComponentType> = {
 export function AppRouter() {
   return (
     <Routes>
+      <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -57,7 +59,6 @@ export function AppRouter() {
           </ProtectedRoute>
         }
       >
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
         {NAV_MODULES.map((mod) => {
           const Page = MODULE_PAGES[mod.id]!
           return <Route key={mod.id} path={mod.path} element={<Page />} />
@@ -66,7 +67,7 @@ export function AppRouter() {
         <Route path="/suppliers/:supplierId" element={<SupplierWorkspacePage />} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
 }

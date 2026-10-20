@@ -17,10 +17,13 @@ interface AuthContextValue {
   signUp: (
     email: string,
     password: string,
-    companyName: string
+    fullName: string,
+    companyName: string,
+    inviteToken?: string
   ) => Promise<{ error: AuthError | null; hasSession: boolean }>
   signOut: () => Promise<void>
   resetPassword: (email: string) => Promise<{ error: AuthError | null }>
+  updatePassword: (newPassword: string) => Promise<{ error: AuthError | null }>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -53,11 +56,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const { error } = await supabase.auth.signInWithPassword({ email, password })
       return { error }
     },
-    signUp: async (email, password, companyName) => {
+    signUp: async (email, password, fullName, companyName, inviteToken) => {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: { data: { company_name: companyName } },
+        options: {
+          data: {
+            full_name: fullName,
+            ...(inviteToken ? { invite_token: inviteToken } : { company_name: companyName }),
+          },
+        },
       })
       return { error, hasSession: data.session !== null }
     },
@@ -66,6 +74,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     resetPassword: async (email) => {
       const { error } = await supabase.auth.resetPasswordForEmail(email)
+      return { error }
+    },
+    updatePassword: async (newPassword) => {
+      const { error } = await supabase.auth.updateUser({ password: newPassword })
       return { error }
     },
   }

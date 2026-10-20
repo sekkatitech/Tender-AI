@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom"
 
 import { Sidebar } from "@/components/layout/sidebar"
 import { Topbar } from "@/components/layout/topbar"
+import { HelpWidget } from "@/features/help/components/help-widget"
 
 export function AppShell() {
   return (
@@ -13,6 +14,7 @@ export function AppShell() {
           <Outlet />
         </main>
       </div>
+      <HelpWidget />
     </div>
   )
 }

@@ -39,6 +39,8 @@ one.
 | `security_performance_hardening` | Fixes from `get_advisors`: pinned `search_path`, tightened `get_my_company_id()` grants, missing FK indexes, `(select auth.uid())` in RLS policies |
 | `handle_new_user` | Signup trigger — creates one `companies` row + one `owner` `profiles` row per new `auth.users` row. Still the only way in: `companies`/`profiles` have no client-facing insert policy |
 | `lock_down_handle_new_user` | Revokes direct RPC execute on `handle_new_user()` — it should only ever fire via the trigger |
+| `team_invites` | `company_invites` (token-based team invites) + `get_invite_preview()`/`list_company_member_emails()` RPCs; updates `handle_new_user()` to redeem an invite token (joining an existing company) instead of always creating a new one; adds a `profiles` role-change trigger + an owner/admin update policy so roles can actually be managed |
+| `fix_self_role_escalation` | The role-change trigger from `team_invites` only checked the acting user's *current* role, not whether they were changing their own row — an admin could self-promote to owner via a direct API call. Tightened to always require a *different* owner/admin |
 
 ## Auth / signup
 
