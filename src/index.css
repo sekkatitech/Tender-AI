@@ -55,42 +55,47 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
+/* The app ships in dark mode (class="dark" on <html>) using the NOVA mobile
+   palette — deep navy, frosted-glass surfaces, cyan glow — so the web app
+   and the NOVA companion read as one product. Cards are translucent; the
+   blur comes from the Card component's backdrop-blur. Popovers stay opaque
+   so menus never show text through them. */
 .dark {
-  --background: hsl(222 47% 7%);
-  --foreground: hsl(210 20% 96%);
+  --background: hsl(212 62% 6%);
+  --foreground: hsl(205 100% 96%);
 
-  --card: hsl(222 40% 10%);
-  --card-foreground: hsl(210 20% 96%);
-  --popover: hsl(222 40% 10%);
-  --popover-foreground: hsl(210 20% 96%);
+  --card: hsl(210 60% 70% / 0.06);
+  --card-foreground: hsl(205 100% 96%);
+  --popover: hsl(212 55% 10%);
+  --popover-foreground: hsl(205 100% 96%);
 
-  --primary: hsl(205 90% 58%);
-  --primary-foreground: hsl(222 47% 8%);
+  --primary: hsl(195 100% 63%);
+  --primary-foreground: hsl(210 65% 8%);
 
-  --secondary: hsl(222 30% 16%);
-  --secondary-foreground: hsl(210 20% 92%);
+  --secondary: hsl(210 60% 70% / 0.1);
+  --secondary-foreground: hsl(205 100% 92%);
 
-  --muted: hsl(222 30% 16%);
-  --muted-foreground: hsl(220 15% 65%);
+  --muted: hsl(210 60% 70% / 0.08);
+  --muted-foreground: hsl(206 28% 64%);
 
-  --accent: hsl(205 60% 20%);
-  --accent-foreground: hsl(205 90% 85%);
+  --accent: hsl(195 100% 63% / 0.14);
+  --accent-foreground: hsl(195 100% 80%);
 
-  --destructive: hsl(0 65% 55%);
-  --destructive-foreground: hsl(0 0% 100%);
+  --destructive: hsl(0 100% 74%);
+  --destructive-foreground: hsl(210 65% 8%);
 
-  --border: hsl(222 25% 20%);
-  --input: hsl(222 25% 20%);
-  --ring: hsl(205 90% 58%);
+  --border: hsl(0 0% 100% / 0.1);
+  --input: hsl(0 0% 100% / 0.14);
+  --ring: hsl(195 100% 63%);
 
-  --sidebar: hsl(224 50% 6%);
-  --sidebar-foreground: hsl(215 20% 70%);
-  --sidebar-primary: hsl(205 90% 55%);
-  --sidebar-primary-foreground: hsl(0 0% 100%);
-  --sidebar-accent: hsl(224 35% 14%);
-  --sidebar-accent-foreground: hsl(205 90% 80%);
-  --sidebar-border: hsl(224 35% 15%);
-  --sidebar-ring: hsl(205 90% 55%);
+  --sidebar: hsl(212 60% 5% / 0.82);
+  --sidebar-foreground: hsl(206 28% 70%);
+  --sidebar-primary: hsl(195 100% 63%);
+  --sidebar-primary-foreground: hsl(210 65% 8%);
+  --sidebar-accent: hsl(0 0% 100% / 0.06);
+  --sidebar-accent-foreground: hsl(195 100% 82%);
+  --sidebar-border: hsl(0 0% 100% / 0.08);
+  --sidebar-ring: hsl(195 100% 63%);
 }
 
 @theme inline {
@@ -131,15 +136,15 @@
      renders dark/cyan regardless of the app's own light/dark mode. Naming
      them here (rather than raw arbitrary hex in every component) gives full
      Tailwind support for opacity modifiers, hover:, etc. */
-  --color-landing-bg: #101415;
-  --color-landing-bg-lowest: #0b0f10;
-  --color-landing-bg-low: #191c1e;
+  --color-landing-bg: #06121f;
+  --color-landing-bg-lowest: #040d17;
+  --color-landing-bg-low: #0b1c2e;
   --color-landing-fg: #e0e3e5;
-  --color-landing-fg-muted: #bac9cc;
+  --color-landing-fg-muted: #a7bdd0;
   --color-landing-accent: #00daf3;
   --color-landing-on-accent: #00363d;
   --color-landing-error: #ffb4ab;
-  --color-landing-border: #3b494c;
+  --color-landing-border: #2b4560;
 
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
@@ -155,5 +160,17 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
+  }
+  /* NOVA's ambient glow: two soft colour pools behind the glass. Fixed so
+     it doesn't scroll away on long pages. */
+  .dark body {
+    background-image:
+      radial-gradient(60rem 40rem at 85% -10%, hsl(195 100% 55% / 0.16), transparent 60%),
+      radial-gradient(50rem 36rem at -10% 110%, hsl(262 80% 60% / 0.14), transparent 60%);
+    background-attachment: fixed;
+  }
+  .dark select option {
+    background-color: var(--popover);
+    color: var(--popover-foreground);
   }
 }

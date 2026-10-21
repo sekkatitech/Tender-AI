@@ -11,7 +11,7 @@ const LEGAL_LINKS = ["Privacy Policy", "Terms of Service", "Cookie Settings"]
 
 export function LandingFooter() {
   return (
-    <footer className="border-t border-landing-border/20 bg-landing-bg-lowest px-4 py-16 md:px-12">
+    <footer className="border-t border-landing-border/20 bg-landing-bg-lowest/80 px-4 py-16 backdrop-blur-xl md:px-12">
       <div className="mx-auto grid max-w-[1440px] grid-cols-1 gap-8 md:grid-cols-4">
         <div className="md:col-span-1">
           <div className="mb-6 flex items-center gap-3">

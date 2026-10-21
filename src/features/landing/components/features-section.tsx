@@ -27,7 +27,7 @@ const FEATURES = [
 
 export function FeaturesSection() {
   return (
-    <section id="features" className="bg-landing-bg-lowest py-32">
+    <section id="features" className="relative border-y border-white/5 bg-[#08192b]/40 py-32">
       <div className="mx-auto max-w-[1440px] px-4 md:px-12">
         <Reveal className="mb-20 flex flex-col items-end justify-between gap-8 md:flex-row">
           <div className="max-w-xl">

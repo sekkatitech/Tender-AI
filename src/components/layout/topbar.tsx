@@ -21,7 +21,7 @@ export function Topbar() {
   const initial = (profile?.full_name || user?.email)?.[0]?.toUpperCase() ?? "U"
 
   return (
-    <header className="flex h-14 items-center justify-between border-b border-border bg-background/95 px-4 backdrop-blur-sm">
+    <header className="flex h-14 items-center justify-between border-b border-border bg-background/60 px-4 backdrop-blur-xl">
       <WorkspaceSwitcher />
 
       <div className="flex items-center gap-3">

@@ -19,39 +19,38 @@ git remote set-url origin <your-github-repo-url>
 git push -u origin main
 ```
 
-## 2) Deploy to Vercel
+## 2) Deploy to Netlify
 
-1. Log in to Vercel.
-2. Click New Project.
-3. Import the GitHub repository.
-4. Set the framework to Vite.
-5. Keep the default build settings:
+1. Log in to Netlify.
+2. Click Add new site > Import an existing project.
+3. Connect the GitHub repository.
+4. Set the build settings:
    - Build command: `npm run build`
-   - Output directory: `dist`
-6. Add environment variables:
+   - Publish directory: `dist`
+5. Add environment variables:
    - `VITE_SUPABASE_URL`
    - `VITE_SUPABASE_PUBLISHABLE_KEY`
-7. Deploy.
+6. Deploy the site.
 
 ## 3) Connect a custom domain
 
-In Vercel:
+In Netlify:
 
-1. Open the project.
-2. Go to Settings > Domains.
+1. Open the site.
+2. Go to Domain settings.
 3. Add your custom domain, for example `app.yourdomain.com`.
-4. Copy the DNS values Vercel shows.
+4. Copy the DNS values Netlify shows.
 5. Add those records in your domain registrar or DNS provider.
 
 Typical DNS setup:
 
-- A record or ALIAS pointing to Vercel's IPs
-- CNAME record for `www` to the Vercel domain
+- A record or CNAME pointing to Netlify's hostname
+- `www` CNAME if you want a branded subdomain
 
-Once DNS propagates, Vercel will issue a valid SSL certificate automatically.
+Netlify will issue SSL automatically once DNS propagates.
 
 ## 4) Important runtime notes
 
 - The app relies on Supabase credentials from environment variables.
-- The `vercel.json` file ensures client-side routes work correctly for React Router.
-- If your production environment needs additional env vars later, add them in Vercel project settings.
+- The `public/_redirects` file ensures client-side routes work correctly for React Router on Netlify.
+- If your production environment needs additional env vars later, add them in Netlify site settings.

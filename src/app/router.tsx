@@ -11,6 +11,7 @@ import {
 } from "@/features/auth"
 import { AdministrationPage } from "@/features/administration"
 import { AiAssistantPage } from "@/features/ai-assistant"
+import { UpgradePage } from "@/features/billing"
 import { BoqPage } from "@/features/boq"
 import { CompliancePage } from "@/features/compliance"
 import { CrmPage } from "@/features/crm"
@@ -65,6 +66,7 @@ export function AppRouter() {
         })}
         <Route path="/tenders/:tenderId" element={<TenderWorkspacePage />} />
         <Route path="/suppliers/:supplierId" element={<SupplierWorkspacePage />} />
+        <Route path="/upgrade" element={<UpgradePage />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

@@ -35,7 +35,7 @@ export function HelpWidget() {
   return (
     <>
       {open && (
-        <div className="fixed right-6 bottom-24 z-50 flex max-h-[32rem] w-96 flex-col overflow-hidden rounded-xl border border-border bg-card shadow-2xl">
+        <div className="fixed right-6 bottom-24 z-50 flex max-h-[32rem] w-96 flex-col overflow-hidden rounded-2xl border border-white/15 bg-[#0a2a4e]/92 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.75),0_0_40px_-12px_hsl(195_100%_60%/0.35)] backdrop-blur-2xl">
           <div className="flex items-center justify-between border-b border-border px-4 py-3">
             {selectedArticle ? (
               <button
@@ -59,7 +59,7 @@ export function HelpWidget() {
               <h3 className="text-base font-semibold text-foreground">{selectedArticle.title}</h3>
               <div className="mt-3 flex flex-col gap-3">
                 {selectedArticle.body.split("\n\n").map((paragraph, i) => (
-                  <p key={i} className="text-sm text-muted-foreground">
+                  <p key={i} className="text-sm leading-relaxed text-foreground/85">
                     {paragraph}
                   </p>
                 ))}
@@ -123,7 +123,7 @@ export function HelpWidget() {
       <Button
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close help" : "Open help"}
-        className="fixed right-6 bottom-6 z-50 flex size-14 items-center justify-center rounded-full p-0 shadow-[0_8px_24px_-4px_hsl(205_90%_50%/0.5)]"
+        className="fixed right-6 bottom-6 z-50 flex size-14 items-center justify-center rounded-full p-0 shadow-[0_8px_24px_-4px_hsl(195_100%_60%/0.45)]"
       >
         {open ? <X className="size-5" /> : <MessageCircleQuestion className="size-5" />}
       </Button>

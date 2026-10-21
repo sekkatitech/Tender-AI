@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -13,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { NAV_MODULES } from "@/config/navigation"
+import { getPlan } from "@/config/plans"
 import { InviteMemberDialog } from "@/features/administration/components/invite-member-dialog"
 import {
   useCompany,
@@ -42,6 +44,25 @@ const ROLE_OPTIONS: { value: UserRole; label: string }[] = [
   { value: "owner", label: "Owner" },
 ]
 
+function PlanAllowance({
+  label,
+  value,
+  suffix = "",
+}: {
+  label: string
+  value: number | null
+  suffix?: string
+}) {
+  return (
+    <div className="rounded-xl border border-border bg-muted/40 p-3">
+      <p className="text-xs text-muted-foreground">{label}</p>
+      <p className="mt-1 text-lg font-semibold text-foreground">
+        {value == null ? "Custom" : `${value}${suffix}`}
+      </p>
+    </div>
+  )
+}
+
 export function AdministrationPage() {
   const myProfile = useMyProfile()
   const isAdmin = myProfile?.role === "owner" || myProfile?.role === "admin"
@@ -60,6 +81,7 @@ export function AdministrationPage() {
   }, [company])
 
   const nameIsDirty = company != null && companyName.trim() !== company.name
+  const plan = getPlan(company?.subscription_tier)
 
   return (
     <div className="flex flex-1 flex-col gap-6 p-6 md:p-8">
@@ -97,12 +119,28 @@ export function AdministrationPage() {
           </div>
           <div className="flex flex-col gap-1.5">
             <Label>Subscription tier</Label>
-            <div>
+            <div className="flex items-center gap-2">
               <Badge variant="secondary" className="capitalize">
-                {company?.subscription_tier ?? "—"}
+                {plan?.name ?? company?.subscription_tier ?? "—"}
               </Badge>
+              {plan && (
+                <span className="text-sm text-muted-foreground">
+                  {plan.price}
+                  {plan.period}
+                </span>
+              )}
+              <Link to="/upgrade" className="ml-auto text-sm font-medium text-primary hover:underline">
+                Change plan
+              </Link>
             </div>
           </div>
+          {plan && (
+            <div className="grid grid-cols-3 gap-3 sm:col-span-2">
+              <PlanAllowance label="AI tender analyses / month" value={plan.aiAnalysesPerMonth} />
+              <PlanAllowance label="Users" value={plan.seats} />
+              <PlanAllowance label="Document vault" value={plan.storageGb} suffix=" GB" />
+            </div>
+          )}
         </CardContent>
       </Card>
 

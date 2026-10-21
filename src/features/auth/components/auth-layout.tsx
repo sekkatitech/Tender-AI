@@ -15,7 +15,7 @@ export function AuthLayout({
 }: AuthLayoutProps) {
   return (
     <div
-      className="relative flex min-h-svh items-center justify-center overflow-hidden bg-[hsl(224_46%_8%)] bg-cover bg-center p-6"
+      className="relative flex min-h-svh items-center justify-center overflow-hidden bg-[hsl(212_62%_6%)] bg-cover bg-center p-6"
       style={{ backgroundImage: "url('/login-background.png')" }}
     >
       {/* Dark scrim so the logo, headings, and footer text stay legible over
@@ -27,7 +27,7 @@ export function AuthLayout({
           <img
             src="/logo.png"
             alt="TenderPilot AI"
-            className="size-10 shrink-0 rounded-xl shadow-[0_0_24px_-2px_hsl(205_90%_50%/0.7)]"
+            className="size-10 shrink-0 rounded-xl shadow-[0_0_24px_-2px_hsl(195_100%_60%/0.55)]"
           />
           <span className="text-lg font-semibold tracking-tight text-white [text-shadow:0_1px_12px_rgba(0,0,0,0.5)]">
             TenderPilot AI

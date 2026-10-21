@@ -5,6 +5,13 @@ import { useAuth } from "@/app/providers/auth-context"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import {
+  ANNUAL_MONTHS_CHARGED,
+  ANNUAL_SAVING_PERCENT,
+  formatRand,
+  getPlan,
+  type PlanId,
+} from "@/config/plans"
 import { AuthLayout } from "@/features/auth/components/auth-layout"
 import { supabase } from "@/lib/supabase/client"
 
@@ -19,6 +26,12 @@ export function SignupPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const inviteToken = searchParams.get("invite")
+  // Chosen on the landing page's pricing section. Display only for now —
+  // billing isn't wired yet, so every new workspace starts on the free trial.
+  const selectedPlan = getPlan(searchParams.get("plan") as PlanId | null)
+  const [billing, setBilling] = useState<"monthly" | "yearly">(
+    searchParams.get("billing") === "yearly" ? "yearly" : "monthly"
+  )
 
   const [fullName, setFullName] = useState("")
   const [companyName, setCompanyName] = useState("")
@@ -119,6 +132,36 @@ export function SignupPage() {
         )}
 
         {inviteError && <p className="text-sm text-destructive">{inviteError}</p>}
+
+        {!invite && selectedPlan?.monthlyRand != null && (
+          <div className="rounded-xl border border-primary/40 bg-primary/10 p-3">
+            <div className="flex items-center justify-between gap-2">
+              <p className="text-sm font-semibold text-foreground">{selectedPlan.name} plan</p>
+              <div className="flex rounded-full bg-black/30 p-0.5 text-xs font-medium">
+                {(["monthly", "yearly"] as const).map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setBilling(option)}
+                    className={
+                      billing === option
+                        ? "rounded-full bg-primary px-3 py-1 text-primary-foreground"
+                        : "rounded-full px-3 py-1 text-muted-foreground hover:text-foreground"
+                    }
+                  >
+                    {option === "monthly" ? "Monthly" : "Yearly"}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {billing === "monthly"
+                ? `${formatRand(selectedPlan.monthlyRand)}/month`
+                : `${formatRand(selectedPlan.monthlyRand * ANNUAL_MONTHS_CHARGED)}/year — save ${ANNUAL_SAVING_PERCENT}% (2 months free)`}
+              {" · "}15-day free trial, nothing charged today.
+            </p>
+          </div>
+        )}
 
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="fullName">Your full name</Label>
