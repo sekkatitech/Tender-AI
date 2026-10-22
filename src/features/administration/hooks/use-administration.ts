@@ -90,12 +90,13 @@ export function useRevokeInvite() {
   })
 }
 
-export function useCompany() {
+export function useCompany(options?: { refetchInterval?: number | false }) {
   const { workspace } = useCompanyWorkspace()
 
   return useQuery({
     queryKey: ["administration", "company", workspace.id],
     queryFn: () => api.getCompany(workspace.id),
+    refetchInterval: options?.refetchInterval,
   })
 }
 

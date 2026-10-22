@@ -1,5 +1,7 @@
 import { useState } from "react"
-import { CheckCircle2, CreditCard, ShieldCheck, Sparkles } from "lucide-react"
+import { useSearchParams } from "react-router-dom"
+import { useMutation } from "@tanstack/react-query"
+import { CheckCircle2, CreditCard, Loader2, ShieldCheck, Sparkles } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -16,10 +18,12 @@ import {
   ANNUAL_MONTHS_CHARGED,
   ANNUAL_SAVING_PERCENT,
   formatRand,
+  getPlan,
   PLANS,
   type Plan,
 } from "@/config/plans"
 import { useCompany } from "@/features/administration/hooks/use-administration"
+import { startCheckout } from "@/features/billing/api/checkout"
 import { cn } from "@/lib/utils"
 
 type Billing = "monthly" | "yearly"
@@ -42,24 +46,38 @@ function priceLine(plan: Plan, billing: Billing) {
 }
 
 export function UpgradePage() {
-  const { data: company } = useCompany()
+  const [searchParams] = useSearchParams()
+  const payment = searchParams.get("payment")
+  // PayFast's notification can land a few seconds after the redirect back,
+  // so poll the plan while the success banner is showing.
+  const { data: company } = useCompany({ refetchInterval: payment === "success" ? 3000 : false })
   const [billing, setBilling] = useState<Billing>("yearly")
   const [chosen, setChosen] = useState<Plan | null>(null)
 
-  const currentIndex = PLANS.findIndex((p) => p.id === company?.subscription_tier)
+  const checkout = useMutation({
+    mutationFn: (plan: Plan) => startCheckout(plan.id, billing),
+  })
 
-  // Online checkout isn't wired yet (payment provider still to be chosen), so
-  // an upgrade is requested by email and activated manually for now.
-  const mailto = chosen
-    ? `mailto:${SALES_EMAIL}?subject=${encodeURIComponent(
-        `Upgrade request: ${chosen.name} (${billing})`
-      )}&body=${encodeURIComponent(
-        `Hi TenderPilot team,\n\nPlease upgrade ${company?.name ?? "our workspace"} to the ${chosen.name} plan, billed ${billing}.\n\nThank you.`
-      )}`
-    : undefined
+  const currentIndex = PLANS.findIndex((p) => p.id === company?.subscription_tier)
 
   return (
     <div className="flex flex-1 flex-col gap-8 p-6 md:p-8">
+      {payment === "success" && (
+        <Card className="flex-row items-center gap-3 border-emerald-500/40">
+          <CheckCircle2 className="size-5 shrink-0 text-emerald-500" />
+          <p className="text-sm">
+            Payment received, thank you. Your plan updates as soon as PayFast confirms it, usually
+            within a minute. You are on <strong>{getPlan(company?.subscription_tier)?.name ?? "—"}</strong>.
+          </p>
+        </Card>
+      )}
+      {payment === "cancelled" && (
+        <Card className="flex-row items-center gap-3">
+          <CreditCard className="size-5 shrink-0 text-muted-foreground" />
+          <p className="text-sm">Checkout was cancelled. You have not been charged.</p>
+        </Card>
+      )}
+
       <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">Upgrade your plan</h1>
@@ -197,18 +215,25 @@ export function UpgradePage() {
                 </DialogDescription>
               </DialogHeader>
               <p className="text-sm text-muted-foreground">
-                Online card and EFT checkout is launching soon. Until then, send us your request and
-                we'll activate {chosen.name} on your workspace within one business day. Your current
-                plan keeps working in the meantime.
+                You'll pay securely on PayFast by card, Instant EFT or SnapScan. The subscription
+                renews {billing === "monthly" ? "monthly" : "yearly"} and you can cancel any time.
               </p>
+              {checkout.isError && (
+                <p className="text-sm text-destructive">{checkout.error.message}</p>
+              )}
               <DialogFooter>
-                <Button variant="ghost" onClick={() => setChosen(null)}>
+                <Button variant="ghost" onClick={() => setChosen(null)} disabled={checkout.isPending}>
                   Cancel
                 </Button>
-                <Button asChild>
-                  <a href={mailto} onClick={() => setChosen(null)}>
-                    Request upgrade
-                  </a>
+                <Button onClick={() => checkout.mutate(chosen)} disabled={checkout.isPending}>
+                  {checkout.isPending ? (
+                    <>
+                      <Loader2 className="animate-spin" />
+                      Opening PayFast…
+                    </>
+                  ) : (
+                    "Pay with PayFast"
+                  )}
                 </Button>
               </DialogFooter>
             </>

@@ -3,12 +3,14 @@
     "target": "es2023",
     "lib": ["ES2023", "DOM"],
     "types": ["node", "@netlify/functions"],
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "paths": { "@/*": ["../src/*"] },
     "skipLibCheck": true,
     "noEmit": true,
     "strict": true,
     "noUnusedLocals": true
   },
-  "include": ["functions/**/*.mts"]
+  "include": ["functions/**/*.mts", "lib/**/*.mts"]
 }
