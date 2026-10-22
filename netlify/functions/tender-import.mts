@@ -217,7 +217,7 @@ export default async (req: Request) => {
     }
     if (error instanceof Anthropic.BadRequestError) {
       console.error("tender-import bad request", error.message)
-      return json({ error: "The AI could not read this document." }, 400)
+      return json({ error: `The AI could not read this document: ${error.message}` }, 400)
     }
     if (error instanceof Anthropic.APIError) {
       console.error("tender-import API error", error.status, error.message)
