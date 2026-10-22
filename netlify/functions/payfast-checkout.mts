@@ -10,6 +10,20 @@ import { paramString, payfastConfig, planAmount, sign } from "../lib/payfast.mts
  * browser, and only owners and admins can start a checkout.
  */
 
+/** Names (never values) of unset variables, so a misconfigured deploy says what's wrong. */
+function missingSettings() {
+  const groups = [
+    ["PAYFAST_MERCHANT_ID"],
+    ["PAYFAST_MERCHANT_KEY"],
+    ["PAYFAST_PASSPHRASE"],
+    ["SUPABASE_URL", "VITE_SUPABASE_URL"],
+    ["SUPABASE_PUBLISHABLE_KEY", "VITE_SUPABASE_PUBLISHABLE_KEY"],
+  ]
+  return groups
+    .filter((names) => names.every((name) => !Netlify.env.get(name)?.trim()))
+    .map((names) => names.at(-1)!)
+}
+
 function json(body: unknown, status = 200) {
   return Response.json(body, { status })
 }
@@ -20,7 +34,7 @@ export default async (req: Request) => {
   const supabaseKey =
     Netlify.env.get("SUPABASE_PUBLISHABLE_KEY") ?? Netlify.env.get("VITE_SUPABASE_PUBLISHABLE_KEY")
   if (!payfast || !supabaseUrl || !supabaseKey) {
-    return json({ error: "Online payments are not configured yet." }, 500)
+    return json({ error: `Online payments are not configured yet. Missing: ${missingSettings().join(", ")}` }, 500)
   }
 
   const token = req.headers.get("authorization")?.replace(/^Bearer\s+/i, "")
