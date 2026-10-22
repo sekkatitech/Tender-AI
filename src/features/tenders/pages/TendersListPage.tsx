@@ -4,6 +4,7 @@ import { FileText } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { formatDate } from "@/lib/utils"
 import { CreateTenderDialog } from "@/features/tenders/components/create-tender-dialog"
+import { ImportTenderDialog } from "@/features/tenders/components/import-tender-dialog"
 import { TenderStatusBadge } from "@/features/tenders/components/tender-status-badge"
 import { useTenders } from "@/features/tenders/hooks/use-tenders"
 
@@ -22,7 +23,10 @@ export function TendersListPage() {
             Discover, track, and manage every tender workspace.
           </p>
         </div>
-        <CreateTenderDialog />
+        <div className="flex flex-wrap gap-2">
+          <ImportTenderDialog />
+          <CreateTenderDialog />
+        </div>
       </div>
 
       {isLoading && (

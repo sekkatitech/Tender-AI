@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { useAuth } from "@/app/providers/auth-context"
 import { useCompanyWorkspace } from "@/app/providers/company-workspace-context"
+import * as aiImport from "@/features/tenders/api/ai-import"
 import * as api from "@/features/tenders/api/tenders"
 
 export function useTenders() {
@@ -42,6 +43,42 @@ export function useCreateTender() {
         client: input.client || null,
         department: input.department || null,
         closing_date: input.closingDate || null,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tenders"] })
+    },
+  })
+}
+
+export function useExtractTender() {
+  const { workspace } = useCompanyWorkspace()
+
+  return useMutation({
+    mutationFn: async (input: { file: File } | { link: string }) => {
+      const source: aiImport.ImportSource =
+        "file" in input
+          ? {
+              kind: "file",
+              fileName: input.file.name,
+              storagePath: await aiImport.uploadImportFile(workspace.id, input.file),
+            }
+          : { kind: "link", link: input.link }
+      return { source, extraction: await aiImport.extractTender(source) }
+    },
+  })
+}
+
+export function useSaveImportedTender() {
+  const queryClient = useQueryClient()
+  const { workspace } = useCompanyWorkspace()
+  const { user } = useAuth()
+
+  return useMutation({
+    mutationFn: (input: { extraction: aiImport.TenderExtraction; source: aiImport.ImportSource }) =>
+      aiImport.saveImportedTender({
+        companyId: workspace.id,
+        userId: user?.id ?? null,
+        ...input,
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tenders"] })

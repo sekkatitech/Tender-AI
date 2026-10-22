@@ -3,12 +3,12 @@ import {
   ArrowLeft,
   Clock,
   History as HistoryIcon,
-  Sparkles,
   Trash2,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { AiAnalysisTab } from "@/features/tenders/components/ai-analysis-tab"
 import { BoqTab } from "@/features/tenders/components/boq-tab"
 import { ChecklistTab } from "@/features/tenders/components/checklist-tab"
 import { DocumentsTab } from "@/features/tenders/components/documents-tab"
@@ -101,11 +101,7 @@ export function TenderWorkspacePage() {
           <OverviewTab tender={tender} />
         </TabsContent>
         <TabsContent value="ai-analysis">
-          <PlaceholderTab
-            icon={Sparkles}
-            title="AI Analysis"
-            description="Automatic extraction of tender requirements, risks, and recommendations arrives with the AI Engine (Phase 6)."
-          />
+          <AiAnalysisTab tender={tender} />
         </TabsContent>
         <TabsContent value="checklist">
           <ChecklistTab tenderId={tender.id} />
