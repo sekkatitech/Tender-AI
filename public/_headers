@@ -1,0 +1,9 @@
+# Netlify response headers for every page and function.
+# A full Content-Security-Policy is still to do (it needs the Supabase, Google Fonts
+# and PayFast origins listed and tested).
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
