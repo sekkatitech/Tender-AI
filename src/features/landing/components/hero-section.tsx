@@ -15,7 +15,7 @@ export function HeroSection() {
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-landing-accent/30 bg-landing-accent/5 px-3 py-1">
             <Zap className="size-3.5 text-landing-accent" />
             <span className="font-mono-label text-xs tracking-widest text-landing-accent uppercase">
-              Africa&apos;s AI-Powered Tender Platform
+              South Africa&apos;s AI-Powered Tender Platform
             </span>
           </div>
 
@@ -25,9 +25,10 @@ export function HeroSection() {
           </h1>
 
           <p className="mb-10 max-w-xl text-lg leading-relaxed text-landing-fg-muted">
-            TenderPilot AI is an intelligent procurement and tender management platform that
-            helps businesses analyse tenders, automate compliance, compare supplier pricing,
-            generate BOQs, and prepare winning submissions faster than ever before.
+            Upload a tender PDF and TenderPilot AI reads it for you — key dates, returnable
+            documents and risks, each with the page it came from. Then track compliance, price
+            your BOQ from supplier price lists, and see your readiness and chance of winning
+            before you bid.
           </p>
 
           <div className="flex flex-wrap gap-4">
@@ -60,8 +61,8 @@ export function HeroSection() {
                 <ShieldCheck className="size-5 text-landing-accent" />
               </div>
               <div>
-                <p className="font-mono-label text-[10px] text-landing-fg">Compliance Score</p>
-                <p className="font-display text-lg font-bold text-landing-accent">98.4%</p>
+                <p className="font-mono-label text-[10px] text-landing-fg">Win Readiness</p>
+                <p className="font-display text-lg font-bold text-landing-accent">86 · On track</p>
               </div>
             </div>
           </div>
@@ -78,7 +79,7 @@ export function HeroSection() {
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-landing-accent opacity-75" />
                 <span className="relative inline-flex size-2 rounded-full bg-landing-accent" />
               </span>
-              <p className="font-mono-label text-[10px] text-landing-fg">AI Analysis Complete</p>
+              <p className="font-mono-label text-[10px] text-landing-fg">Tender read · 14 returnables found</p>
             </div>
             <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
               <div className="h-full w-[95%] bg-landing-accent" />

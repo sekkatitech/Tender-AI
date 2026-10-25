@@ -14,6 +14,16 @@ const FAQS = [
       "No. TenderPilot is built as a force-multiplier, not a replacement. It automates the tedious data extraction and calculation work, so your team can focus on strategy and proposal quality.",
   },
   {
+    question: "Can I trust what the AI pulls out of a tender?",
+    answer:
+      "You can check it. Every date, returnable document and risk the AI finds shows the page of the tender it came from, and nothing is saved until you have reviewed it. If the document doesn't say something, the AI leaves it blank rather than guessing.",
+  },
+  {
+    question: "Is there a mobile app?",
+    answer:
+      "Yes — NOVA, your mobile assistant. Sign in with your TenderPilot AI account to see a daily briefing, upcoming closing dates and alerts, and to scan IDs, certificates and tender pages straight into your company documents.",
+  },
+  {
     question: "What industries do you support?",
     answer:
       "We're built for document-heavy, mathematically complex tendering — Construction, ICT, Engineering, Security, Medical, Energy, and Professional Services, across government and private-sector procurement.",

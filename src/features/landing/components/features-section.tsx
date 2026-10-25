@@ -1,27 +1,27 @@
-import { ArrowRightCircle, ListChecks, Network, Sigma, TrendingUp } from "lucide-react"
+import { ArrowRightCircle, Network, ShieldCheck, Sigma, TrendingUp } from "lucide-react"
 
 import { Reveal } from "@/features/landing/components/reveal"
 
 const FEATURES = [
   {
     icon: TrendingUp,
-    title: "Tender Intelligence",
-    body: "A live pipeline view of every tender you're tracking, with status, deadlines, and win-rate reporting built in.",
+    title: "Win Forecast",
+    body: "Every open tender gets a readiness score. The AI forecast weighs it against your win/loss history and gives a bid or no-bid call.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Compliance Tracking",
+    body: "Returnables become a checklist with page references, plus reminders for closing dates, compulsory briefings and tasks that fall due.",
+  },
+  {
+    icon: Sigma,
+    title: "BOQ & Pricing Engine",
+    body: "Build the BOQ per tender with a full cost breakdown per line — supplier cost, freight, labour, overheads, markup and VAT.",
   },
   {
     icon: Network,
     title: "Supplier Intel",
     body: "A searchable supplier and product catalogue, built from the price lists you already collect every month.",
-  },
-  {
-    icon: Sigma,
-    title: "Pricing Engine",
-    body: "A full cost breakdown per BOQ line — supplier cost, freight, labour, overheads, markup, and VAT — calculated automatically.",
-  },
-  {
-    icon: ListChecks,
-    title: "BOQ Builder",
-    body: "Build, price, and manage bills of quantities per tender, with a company-wide library to search across every one you've built.",
   },
 ]
 

@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { href: "#workflow", label: "How it works" },
   { href: "#pricing", label: "Pricing" },
   { href: "#faq", label: "FAQ" },
+  { href: "#nova", label: "NOVA" },
 ]
 
 /** Highlights the link for whichever section is currently in view. */

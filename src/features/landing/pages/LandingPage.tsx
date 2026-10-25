@@ -7,6 +7,7 @@ import { FinalCtaSection } from "@/features/landing/components/final-cta-section
 import { HeroSection } from "@/features/landing/components/hero-section"
 import { LandingFooter } from "@/features/landing/components/landing-footer"
 import { LandingNav } from "@/features/landing/components/landing-nav"
+import { MeetNovaSection } from "@/features/landing/components/meet-nova-section"
 import { MeetTenderSection } from "@/features/landing/components/meet-tender-section"
 import { PricingSection } from "@/features/landing/components/pricing-section"
 import { ProblemSection } from "@/features/landing/components/problem-section"
@@ -16,7 +17,7 @@ import "@/features/landing/landing.css"
 
 const TITLE = "TenderPilot AI | Win More Tenders with AI Intelligence"
 const DESCRIPTION =
-  "TenderPilot AI is Africa's AI-powered tender and procurement intelligence platform — analyse tenders, automate compliance, compare supplier pricing, and prepare winning submissions faster."
+  "TenderPilot AI reads South African tender documents with AI, tracks compliance, prices your BOQ and forecasts your chance of winning — with NOVA, your mobile assistant, on your phone."
 
 export function LandingPage() {
   useEffect(() => {
@@ -50,6 +51,7 @@ export function LandingPage() {
       <DashboardPreviewSection />
       <PricingSection />
       <FaqSection />
+      <MeetNovaSection />
       <FinalCtaSection />
       <LandingFooter />
     </div>

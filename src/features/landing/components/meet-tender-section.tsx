@@ -1,22 +1,22 @@
-import { Brain, Search, Trophy } from "lucide-react"
+import { Brain, FileUp, Trophy } from "lucide-react"
 
 import { Reveal } from "@/features/landing/components/reveal"
 
 const PILLARS = [
   {
-    icon: Search,
-    title: "Discover Opportunities",
-    body: "TENDER monitors your tender pipeline to help you find the perfect contracts that match your firm's exact capabilities.",
+    icon: FileUp,
+    title: "Import Any Tender",
+    body: "Upload the tender PDF or paste an e-tender link. TENDER fills in the tender for you — number, client, closing date, briefing and evaluation method.",
   },
   {
     icon: Brain,
-    title: "Intelligent Analysis",
-    body: "Automated extraction of key requirements, risks, and compliance hurdles — designed to happen in seconds, not days.",
+    title: "Analysis You Can Check",
+    body: "Returnable documents, risks and requirements are pulled out in minutes, each with the page it came from. Click the page to see it in the PDF.",
   },
   {
     icon: Trophy,
-    title: "Winning Strategy",
-    body: "AI-driven pricing and proposal support tailored to the specific evaluation criteria of each tender.",
+    title: "Know Your Chances",
+    body: "A readiness score for every tender, and an AI win forecast that learns from your past wins and losses and tells you whether to bid.",
   },
 ]
 

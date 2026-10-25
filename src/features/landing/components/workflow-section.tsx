@@ -11,32 +11,32 @@ const FINAL_OUTCOMES = [
   {
     icon: BellRing,
     title: "Never late",
-    body: "Closing dates and compulsory briefings pushed to your phone by NOVA.",
+    body: "Closing dates, compulsory briefings and due tasks on your phone in NOVA.",
   },
   {
     icon: LineChart,
     title: "Learn from every bid",
-    body: "Win/loss history feeds smarter pricing for the next tender.",
+    body: "Each win and loss you record sharpens the AI forecast for the next tender.",
   },
 ] as const
 
 const STEPS = [
   {
     number: "01",
-    label: "Discover",
-    heading: "Discover Every Opportunity That Matters",
+    label: "Capture",
+    heading: "Bring Every Tender into One Pipeline",
     paragraphs: [
-      "TenderPilot AI continuously helps you identify and organise tender opportunities from government departments, municipalities, state-owned enterprises and private organisations. Instead of searching multiple websites manually every day, your team works from a centralised opportunity hub where every tender is categorised, prioritised and tracked according to your business profile.",
-      "Your sourcing workspace ensures that no valuable opportunity is missed and every potential contract is captured before the deadline.",
+      "Found a tender on eTenders, a municipal site or in your inbox? Upload the PDF or paste the link and it becomes a tender workspace in minutes, or add it by hand with just a title.",
+      "Every tender you are chasing sits in one list with its status, closing date and readiness score, so nothing slips past its deadline.",
     ],
   },
   {
     number: "02",
     label: "Analyse",
-    heading: "Analyse Complex Tender Documents in Minutes",
+    heading: "Read the Tender Document in Minutes",
     paragraphs: [
-      "Upload one or multiple tender documents and let AI perform the heavy lifting. TenderPilot AI automatically reads hundreds of pages, extracts critical information, identifies mandatory returnable documents, highlights compliance requirements, summarises technical specifications and creates a structured tender workspace for your team.",
-      "Instead of spending hours reading documents manually, your team can immediately focus on preparing a competitive response.",
+      "TenderPilot AI reads the tender document and fills in the tender number, client, closing and briefing dates, submission and evaluation method, and preference points. It lists every returnable document and flags risks such as compulsory briefings, CIDB grading and penalties.",
+      "Each detail shows the page it came from. You check it, correct anything, and save — nothing is created until you approve it.",
     ],
   },
   {
@@ -44,8 +44,8 @@ const STEPS = [
     label: "Price",
     heading: "Build Accurate Pricing with Confidence",
     paragraphs: [
-      "Create professional Bills of Quantities (BOQs) using intelligent pricing tools that combine supplier price lists, labour costs, logistics, mark-ups, overheads, contingency and profit margins into one calculation engine. TenderPilot AI recommends suitable products, compares multiple suppliers and helps ensure your pricing remains competitive while protecting your profitability.",
-      "Every quotation is calculated using consistent business rules to reduce costly pricing mistakes.",
+      "Build the Bill of Quantities (BOQ) line by line from your supplier price lists. The pricing engine adds freight, labour, overheads and markup to each line and works out the price with and without VAT.",
+      "Every line is calculated with the same rules, which cuts the costly mistakes of spreadsheet pricing.",
     ],
   },
   {
@@ -53,8 +53,8 @@ const STEPS = [
     label: "Manage",
     heading: "Manage Every Tender from One Workspace",
     paragraphs: [
-      "TenderPilot AI transforms every tender into a collaborative digital workspace where your entire team can work together. Assign tasks, upload supporting documents, monitor compliance, track deadlines, communicate internally and monitor project progress through a single dashboard.",
-      "Every activity is recorded, ensuring complete visibility, accountability and version control throughout the tender preparation process.",
+      "Each tender gets its own workspace: a returnables checklist, documents, BOQ, linked suppliers, team tasks, notes and the submission record. Invite your team and assign tasks with due dates.",
+      "Reminders for closing dates, briefings and due tasks reach you on the web and on your phone through NOVA.",
     ],
   },
 ] as const
@@ -64,8 +64,8 @@ const FINAL_STEP = {
   label: "Win",
   heading: "Submit Winning Tenders with Confidence",
   paragraphs: [
-    "When every requirement has been verified, TenderPilot AI helps your team finalise and submit a complete, compliant and professionally prepared tender package. Built-in validation ensures mandatory documents are included, compliance risks are minimised and submission deadlines are never overlooked.",
-    "After submission, continue tracking the tender lifecycle, monitor outcomes and use historical data to improve future bid performance.",
+    "Before you submit, the readiness score shows what is still outstanding — missing mandatory documents, open tasks, an unpriced BOQ or too little time left. The AI win forecast explains your chances and recommends whether to bid.",
+    "After submission, record the outcome. Your win/loss history makes the next forecast sharper.",
   ],
 } as const
 
@@ -77,7 +77,7 @@ export function WorkflowSection() {
           <h2 className="font-display mb-4 text-3xl font-bold text-landing-fg">
             The TenderPilot Workflow
           </h2>
-          <p className="text-landing-fg-muted">Five steps from discovery to contract victory.</p>
+          <p className="text-landing-fg-muted">Five steps from tender document to contract won.</p>
         </Reveal>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
