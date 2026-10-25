@@ -221,3 +221,45 @@ export async function unlinkSupplier(id: string): Promise<void> {
   const { error } = await supabase.from("tender_suppliers").delete().eq("id", id)
   if (error) throw error
 }
+
+// ── Readiness across tenders ─────────────────────────────────────────────
+
+export interface TenderReadinessCounts {
+  checklist: { is_mandatory: boolean; is_complete: boolean }[]
+  tasks: { status: string }[]
+  boqLineCount: number
+  documentCount: number
+}
+
+/**
+ * The inputs assessReadiness() needs for every tender the company has, in
+ * four queries rather than four per tender, so the tenders list can show a
+ * score on each row.
+ */
+export async function listReadinessCounts(): Promise<Map<string, TenderReadinessCounts>> {
+  const [checklist, tasks, boq, documents] = await Promise.all([
+    supabase.from("tender_checklist_items").select("tender_id, is_mandatory, is_complete"),
+    supabase.from("tender_tasks").select("tender_id, status"),
+    supabase.from("boq_items").select("tender_id"),
+    supabase.from("documents").select("tender_id").not("tender_id", "is", null),
+  ])
+  for (const result of [checklist, tasks, boq, documents]) {
+    if (result.error) throw result.error
+  }
+
+  const counts = new Map<string, TenderReadinessCounts>()
+  const entry = (tenderId: string) => {
+    let row = counts.get(tenderId)
+    if (!row) {
+      row = { checklist: [], tasks: [], boqLineCount: 0, documentCount: 0 }
+      counts.set(tenderId, row)
+    }
+    return row
+  }
+
+  for (const item of checklist.data ?? []) entry(item.tender_id).checklist.push(item)
+  for (const task of tasks.data ?? []) entry(task.tender_id).tasks.push(task)
+  for (const line of boq.data ?? []) entry(line.tender_id).boqLineCount++
+  for (const doc of documents.data ?? []) if (doc.tender_id) entry(doc.tender_id).documentCount++
+  return counts
+}

@@ -156,11 +156,13 @@ To bring someone new in, click "Invite teammate," pick a role, and share the gen
 "Password & Security" lets you change your sign-in password. Company name and subscription tier are managed from Administration instead — there's a link straight there if you need it.`,
   },
   {
-    id: "ai-assistant",
-    title: "AI Assistant (coming soon)",
-    moduleId: "ai-assistant",
-    keywords: ["ai", "assistant", "coming soon"],
-    body: `AI Assistant isn't built yet — it needs an AI provider and API keys to be configured first. Once that's in place, it'll analyse tender documents, extract BOQs, suggest suppliers and pricing, and answer questions using your Knowledge Base.`,
+    id: "ai-features",
+    title: "AI tender import and win forecast",
+    moduleId: "tenders",
+    keywords: ["ai", "import", "pdf", "forecast", "readiness", "win"],
+    body: `In Tender Management, click "Import with AI" and upload the tender PDF or paste its link. The AI fills in the New Tender form, lists the returnable documents and risks, and shows the page each detail came from. Click a page number to open the PDF on that page and check it before you save.
+
+Inside a tender, the AI Analysis tab shows a readiness score and an AI win forecast, based on your checklist, deadlines and your company's past wins and losses.`,
   },
   {
     id: "faq",

@@ -12,6 +12,13 @@ export function useTenders() {
   })
 }
 
+export function useReadinessCounts() {
+  return useQuery({
+    queryKey: ["tenders", "readiness-counts"],
+    queryFn: api.listReadinessCounts,
+  })
+}
+
 export function useTender(id: string | undefined) {
   return useQuery({
     queryKey: ["tenders", id],

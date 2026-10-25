@@ -5,12 +5,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { formatDate } from "@/lib/utils"
 import { CreateTenderDialog } from "@/features/tenders/components/create-tender-dialog"
 import { ImportTenderDialog } from "@/features/tenders/components/import-tender-dialog"
+import { ReadinessBadge } from "@/features/tenders/components/readiness-badge"
 import { TenderStatusBadge } from "@/features/tenders/components/tender-status-badge"
-import { useTenders } from "@/features/tenders/hooks/use-tenders"
+import { useReadinessCounts, useTenders } from "@/features/tenders/hooks/use-tenders"
+import { assessReadiness } from "@/features/tenders/lib/readiness"
+
+// Submitted, won, lost and archived tenders are past the point a readiness score helps.
+const OPEN_STATUSES = new Set(["discovered", "in_progress"])
 
 export function TendersListPage() {
   const navigate = useNavigate()
   const { data: tenders, isLoading, error } = useTenders()
+  const { data: counts } = useReadinessCounts()
+  const now = new Date()
 
   return (
     <div className="flex flex-1 flex-col gap-6 p-6 md:p-8">
@@ -65,6 +72,7 @@ export function TendersListPage() {
                 <th className="px-4 py-2.5">Client</th>
                 <th className="px-4 py-2.5">Status</th>
                 <th className="px-4 py-2.5">Closing date</th>
+                <th className="px-4 py-2.5">Readiness</th>
               </tr>
             </thead>
             <tbody>
@@ -88,6 +96,25 @@ export function TendersListPage() {
                   </td>
                   <td className="px-4 py-2.5 text-muted-foreground">
                     {formatDate(tender.closing_date)}
+                  </td>
+                  <td className="px-4 py-2.5">
+                    {counts && OPEN_STATUSES.has(tender.status) ? (
+                      <ReadinessBadge
+                        readiness={assessReadiness({
+                          now,
+                          closingDate: tender.closing_date,
+                          briefingDate: tender.briefing_date,
+                          isBriefingCompulsory: tender.is_briefing_compulsory,
+                          checklist: [],
+                          tasks: [],
+                          boqLineCount: 0,
+                          documentCount: 0,
+                          ...counts.get(tender.id),
+                        })}
+                      />
+                    ) : (
+                      <span className="text-muted-foreground">—</span>
+                    )}
                   </td>
                 </tr>
               ))}

@@ -13,7 +13,6 @@ import {
   FolderKanban,
   Settings2,
   Settings,
-  Sparkles,
   type LucideIcon,
 } from "lucide-react"
 
@@ -128,12 +127,5 @@ export const NAV_MODULES: NavModule[] = [
     path: "/settings",
     icon: Settings,
     description: "Workspace, billing, and account preferences.",
-  },
-  {
-    id: "ai-assistant",
-    label: "AI Assistant",
-    path: "/ai-assistant",
-    icon: Sparkles,
-    description: "Ask questions and get AI-generated recommendations.",
   },
 ]

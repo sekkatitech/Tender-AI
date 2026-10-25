@@ -10,15 +10,9 @@ import { useBoqItems } from "@/features/tenders/hooks/use-boq"
 import { useChecklistItems } from "@/features/tenders/hooks/use-checklist"
 import { useTenderDocuments } from "@/features/tenders/hooks/use-documents"
 import { useTasks } from "@/features/tenders/hooks/use-tasks"
-import { assessReadiness, type ReadinessBand } from "@/features/tenders/lib/readiness"
+import { READINESS_BAND } from "@/features/tenders/components/readiness-badge"
+import { assessReadiness } from "@/features/tenders/lib/readiness"
 import { cn, formatDate } from "@/lib/utils"
-
-const BAND: Record<ReadinessBand, { label: string; className: string }> = {
-  ready: { label: "Ready to submit", className: "text-emerald-500" },
-  on_track: { label: "On track", className: "text-primary" },
-  at_risk: { label: "At risk", className: "text-amber-500" },
-  critical: { label: "Critical", className: "text-destructive" },
-}
 
 const LIKELIHOOD = { low: "destructive", medium: "outline", high: "success" } as const
 const RISK_SEVERITY = { low: "secondary", medium: "outline", high: "destructive" } as const
@@ -56,7 +50,7 @@ export function AiAnalysisTab({ tender }: { tender: Tender }) {
     boqLineCount: boq.length,
     documentCount: documents.length,
   })
-  const band = BAND[readiness.band]
+  const band = READINESS_BAND[readiness.band]
   const result = forecast.data?.forecast
 
   return (

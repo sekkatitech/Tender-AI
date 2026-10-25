@@ -54,9 +54,21 @@ function fromLocalInput(value: string) {
   return value ? new Date(value).toISOString() : null
 }
 
-function PageRef({ page }: { page: number | null | undefined }) {
+/** "p. 12", linked to that page of the PDF so the reader can check the AI's work. */
+function PageRef({ page, pdfUrl }: { page: number | null | undefined; pdfUrl: string | null }) {
   if (!page) return null
-  return <span className="text-xs font-normal text-muted-foreground">p. {page}</span>
+  if (!pdfUrl) return <span className="text-xs font-normal text-muted-foreground">p. {page}</span>
+  return (
+    <a
+      href={`${pdfUrl}#page=${page}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      title={`Open page ${page} of the tender`}
+      className="text-xs font-normal text-primary underline-offset-2 hover:underline"
+    >
+      p. {page}
+    </a>
+  )
 }
 
 export function ImportTenderDialog() {
@@ -70,12 +82,16 @@ export function ImportTenderDialog() {
   const [link, setLink] = useState("")
   const [source, setSource] = useState<ImportSource | null>(null)
   const [draft, setDraft] = useState<TenderExtraction | null>(null)
+  // The uploaded file as a local blob URL, or the pasted link, for PageRef.
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null)
 
   function reset() {
     setFile(null)
     setLink("")
     setSource(null)
     setDraft(null)
+    if (pdfUrl?.startsWith("blob:")) URL.revokeObjectURL(pdfUrl)
+    setPdfUrl(null)
     extract.reset()
     save.reset()
   }
@@ -94,6 +110,7 @@ export function ImportTenderDialog() {
     const result = await extract.mutateAsync(input)
     setSource(result.source)
     setDraft(result.extraction)
+    setPdfUrl(mode === "file" && file ? URL.createObjectURL(file) : link.trim() || null)
   }
 
   async function handleCreate(event: FormEvent<HTMLFormElement>) {
@@ -209,7 +226,7 @@ export function ImportTenderDialog() {
                 <div key={key} className={`flex flex-col gap-1.5 ${long ? "sm:col-span-2" : ""}`}>
                   <Label htmlFor={`import-${key}`} className="justify-between">
                     {label}
-                    <PageRef page={pageFor(key)} />
+                    <PageRef page={pageFor(key)} pdfUrl={pdfUrl} />
                   </Label>
                   {long ? (
                     <Textarea
@@ -233,7 +250,7 @@ export function ImportTenderDialog() {
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="import-closing" className="justify-between">
                   Closing date
-                  <PageRef page={pageFor("closing_date")} />
+                  <PageRef page={pageFor("closing_date")} pdfUrl={pdfUrl} />
                 </Label>
                 <Input
                   id="import-closing"
@@ -245,7 +262,7 @@ export function ImportTenderDialog() {
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="import-briefing" className="justify-between">
                   Briefing
-                  <PageRef page={pageFor("briefing_date")} />
+                  <PageRef page={pageFor("briefing_date")} pdfUrl={pdfUrl} />
                 </Label>
                 <Input
                   id="import-briefing"
@@ -274,7 +291,7 @@ export function ImportTenderDialog() {
                         {risk.severity}
                       </Badge>
                       <span className="flex-1">{risk.risk}</span>
-                      <PageRef page={risk.page} />
+                      <PageRef page={risk.page} pdfUrl={pdfUrl} />
                     </li>
                   ))}
                 </ul>
@@ -291,7 +308,7 @@ export function ImportTenderDialog() {
                     <li key={index} className="flex items-start gap-2 text-sm">
                       <span className="flex-1">{doc.label}</span>
                       {doc.is_mandatory && <Badge variant="outline">Mandatory</Badge>}
-                      <PageRef page={doc.page} />
+                      <PageRef page={doc.page} pdfUrl={pdfUrl} />
                     </li>
                   ))}
                 </ul>

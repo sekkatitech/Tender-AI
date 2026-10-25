@@ -1,10 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom"
-import {
-  ArrowLeft,
-  Clock,
-  History as HistoryIcon,
-  Trash2,
-} from "lucide-react"
+import { ArrowLeft, Trash2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -14,7 +9,6 @@ import { ChecklistTab } from "@/features/tenders/components/checklist-tab"
 import { DocumentsTab } from "@/features/tenders/components/documents-tab"
 import { NotesTab } from "@/features/tenders/components/notes-tab"
 import { OverviewTab } from "@/features/tenders/components/overview-tab"
-import { PlaceholderTab } from "@/features/tenders/components/placeholder-tab"
 import { PricingTab } from "@/features/tenders/components/pricing-tab"
 import { SubmissionTab } from "@/features/tenders/components/submission-tab"
 import { SuppliersTab } from "@/features/tenders/components/suppliers-tab"
@@ -91,10 +85,8 @@ export function TenderWorkspacePage() {
           <TabsTrigger value="pricing">Pricing</TabsTrigger>
           <TabsTrigger value="suppliers">Suppliers</TabsTrigger>
           <TabsTrigger value="tasks">Tasks</TabsTrigger>
-          <TabsTrigger value="timeline">Timeline</TabsTrigger>
           <TabsTrigger value="notes">Notes</TabsTrigger>
           <TabsTrigger value="submission">Submission</TabsTrigger>
-          <TabsTrigger value="history">History</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview">
@@ -121,25 +113,11 @@ export function TenderWorkspacePage() {
         <TabsContent value="tasks">
           <TasksTab tenderId={tender.id} />
         </TabsContent>
-        <TabsContent value="timeline">
-          <PlaceholderTab
-            icon={Clock}
-            title="Timeline"
-            description="An automatic activity timeline for this tender is coming in a later pass."
-          />
-        </TabsContent>
         <TabsContent value="notes">
           <NotesTab tenderId={tender.id} />
         </TabsContent>
         <TabsContent value="submission">
           <SubmissionTab tenderId={tender.id} />
-        </TabsContent>
-        <TabsContent value="history">
-          <PlaceholderTab
-            icon={HistoryIcon}
-            title="History"
-            description="A full audit history for this tender is coming in a later pass."
-          />
         </TabsContent>
       </Tabs>
     </div>

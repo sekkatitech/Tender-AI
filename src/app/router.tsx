@@ -10,7 +10,6 @@ import {
   SignupPage,
 } from "@/features/auth"
 import { AdministrationPage } from "@/features/administration"
-import { AiAssistantPage } from "@/features/ai-assistant"
 import { UpgradePage } from "@/features/billing"
 import { BoqPage } from "@/features/boq"
 import { CompliancePage } from "@/features/compliance"
@@ -42,7 +41,6 @@ const MODULE_PAGES: Record<string, ComponentType> = {
   projects: ProjectsPage,
   administration: AdministrationPage,
   settings: SettingsPage,
-  "ai-assistant": AiAssistantPage,
 }
 
 export function AppRouter() {
