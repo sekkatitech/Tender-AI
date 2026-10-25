@@ -25,7 +25,7 @@
 
 do $$
 declare
-  v_email   text := 'info@sekkatitech.co.za';   -- ← the judge account's email
+  v_email   text := 'CHANGE-ME@example.com';   -- ← the judge account's email (never your real account)
   v_user    uuid;
   v_company uuid;
   v_today   date := (now() at time zone 'Africa/Johannesburg')::date;
