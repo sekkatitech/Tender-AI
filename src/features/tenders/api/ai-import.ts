@@ -25,7 +25,11 @@ export interface TenderExtraction {
 export type ImportSource = { kind: "file"; storagePath: string; fileName: string } | { kind: "link"; link: string }
 
 export async function uploadImportFile(companyId: string, file: File): Promise<string> {
-  const storagePath = `${companyId}/imports/${Date.now()}-${file.name}`
+  // Storage keys with accents, spaces or symbols like & # [ ] can upload but then fail to
+  // sign (404 in tender-import), so the key keeps only safe characters. The real name is
+  // still shown and saved from file.name.
+  const safeName = file.name.normalize("NFKD").replace(/[^\w.-]+/g, "_").replace(/_+/g, "_")
+  const storagePath = `${companyId}/imports/${Date.now()}-${safeName}`
   const { error } = await supabase.storage.from("documents").upload(storagePath, file)
   if (error) throw error
   return storagePath
