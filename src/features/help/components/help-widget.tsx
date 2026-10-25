@@ -110,11 +110,11 @@ export function HelpWidget() {
 
           <div className="border-t border-border px-4 py-3">
             <a
-              href="mailto:support@tenderpilot.ai"
+              href="mailto:info@sekkatitech.co.za"
               className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary"
             >
               <Mail className="size-3.5" />
-              Still stuck? Email support@tenderpilot.ai
+              Still stuck? Email info@sekkatitech.co.za
             </a>
           </div>
         </div>
