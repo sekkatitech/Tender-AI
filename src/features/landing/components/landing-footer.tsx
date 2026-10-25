@@ -23,7 +23,7 @@ export function LandingFooter() {
           </p>
           <div className="flex gap-4">
             <a
-              href="mailto:hello@tenderpilot.ai"
+              href="mailto:info@sekkatitech.co.za"
               aria-label="Email"
               className="glass flex size-10 items-center justify-center rounded-full transition-colors hover:border-landing-accent"
             >

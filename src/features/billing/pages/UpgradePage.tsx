@@ -28,7 +28,7 @@ import { cn } from "@/lib/utils"
 
 type Billing = "monthly" | "yearly"
 
-const SALES_EMAIL = "hello@tenderpilot.ai"
+const SALES_EMAIL = "info@sekkatitech.co.za"
 
 function priceLine(plan: Plan, billing: Billing) {
   if (plan.monthlyRand == null) return { main: "Custom", sub: "Tailored to your volume" }

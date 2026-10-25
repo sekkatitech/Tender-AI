@@ -42,7 +42,7 @@ export const PLANS: Plan[] = [
       "3 AI tender analyses / month",
       "1 user · up to 10 active tenders",
       "Unlimited uploads, e-tender links & phone scans",
-      "NOVA mobile: deadlines, alerts, document scanning",
+      "NOVA mobile app free: deadlines, alerts, scanning",
       "Compliance checklist & briefing reminders",
       "Basic BOQ & supplier catalogue",
       "5 GB document vault",
@@ -106,10 +106,10 @@ export const PLANS: Plan[] = [
     storageGb: null,
     features: [
       "Custom AI analysis volume",
-      "Bring your own Claude or Gemini key",
+      "Bring your own Claude or Gemini key (on request)",
       "Multiple company entities",
-      "Single sign-on & API access",
-      "SA data residency option (POPIA)",
+      "Single sign-on & API access (on request)",
+      "SA data residency option, POPIA (on request)",
       "Dedicated onboarding & SLA support",
     ],
     cta: "Contact Sales",
@@ -120,6 +120,8 @@ export const PLANS: Plan[] = [
 export const PLAN_FINE_PRINT = [
   "All documents for one tender count as one analysis — addenda and re-runs within 30 days are free.",
   "Top-up packs of 10 analyses available on every paid plan.",
+  "The NOVA mobile app is free with every TenderPilot AI account.",
+  "Every plan starts with a 1-month free trial — no credit card required.",
 ]
 
 /** Annual billing charges 10 months for 12 — two months free. */

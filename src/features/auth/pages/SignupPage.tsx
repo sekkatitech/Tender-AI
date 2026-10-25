@@ -158,7 +158,7 @@ export function SignupPage() {
               {billing === "monthly"
                 ? `${formatRand(selectedPlan.monthlyRand)}/month`
                 : `${formatRand(selectedPlan.monthlyRand * ANNUAL_MONTHS_CHARGED)}/year — save ${ANNUAL_SAVING_PERCENT}% (2 months free)`}
-              {" · "}15-day free trial, nothing charged today.
+              {" · "}1-month free trial, nothing charged today.
             </p>
           </div>
         )}

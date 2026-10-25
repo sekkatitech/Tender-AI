@@ -76,7 +76,8 @@ export function PricingSection() {
             Pay per tender analysed, not per page
           </h2>
           <p className="mx-auto max-w-2xl text-landing-fg-muted">
-            Uploads, e-tender links and phone scans are always free. 15-day free trial on every
+            Uploads, e-tender links and phone scans are always free, and the NOVA mobile app is free
+            with every account. 1-month free trial on every
             plan — no credit card required.
           </p>
         </Reveal>
@@ -147,7 +148,7 @@ export function PricingSection() {
                 </ul>
                 {plan.id === "enterprise" ? (
                   <a
-                    href="mailto:hello@tenderpilot.ai"
+                    href="mailto:info@sekkatitech.co.za"
                     className="block w-full rounded-xl border border-white/20 bg-white/5 py-3.5 text-center font-bold text-landing-fg transition-all hover:bg-white/10"
                   >
                     {plan.cta}

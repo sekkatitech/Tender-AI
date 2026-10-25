@@ -23,14 +23,14 @@ export function FinalCtaSection() {
                 Start Your Free Trial
               </Link>
               <a
-                href="mailto:hello@tenderpilot.ai"
+                href="mailto:info@sekkatitech.co.za"
                 className="glass rounded-2xl border border-white/10 px-12 py-5 text-lg font-bold text-landing-fg transition-all hover:bg-white/5"
               >
                 Schedule a Private Demo
               </a>
             </div>
             <p className="font-mono-label mt-6 text-xs tracking-widest text-landing-fg-muted uppercase">
-              15 days free · No credit card required
+              1 month free · No credit card required
             </p>
           </div>
         </Reveal>

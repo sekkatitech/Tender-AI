@@ -40,9 +40,12 @@ export function MeetNovaSection() {
           <h2 className="font-display mb-4 text-3xl font-bold tracking-tight text-landing-fg sm:text-4xl">
             Meet <span className="text-landing-accent">NOVA</span>, your mobile assistant
           </h2>
-          <p className="mb-8 max-w-lg text-landing-fg-muted">
+          <p className="mb-5 max-w-lg text-landing-fg-muted">
             NOVA brings your TenderPilot AI workspace to your phone. Same account, same tenders —
             so you can stay on top of a bid from the site, the office or the road.
+          </p>
+          <p className="mb-8 inline-flex rounded-full bg-emerald-400/15 px-3 py-1 text-sm font-semibold text-emerald-300 ring-1 ring-emerald-400/40">
+            Free with every TenderPilot AI account
           </p>
 
           <ul className="space-y-4">

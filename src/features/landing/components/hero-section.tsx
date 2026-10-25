@@ -48,7 +48,7 @@ export function HeroSection() {
           </div>
 
           <p className="font-mono-label mt-4 text-xs tracking-widest text-landing-fg-muted uppercase">
-            15-day free trial · No credit card required
+            1-month free trial · No credit card required
           </p>
         </Reveal>
 

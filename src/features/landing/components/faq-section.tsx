@@ -21,7 +21,7 @@ const FAQS = [
   {
     question: "Is there a mobile app?",
     answer:
-      "Yes — NOVA, your mobile assistant. Sign in with your TenderPilot AI account to see a daily briefing, upcoming closing dates and alerts, and to scan IDs, certificates and tender pages straight into your company documents.",
+      "Yes — NOVA, your mobile assistant, free with every account. Sign in with your TenderPilot AI account to see a daily briefing, upcoming closing dates and alerts, and to scan IDs, certificates and tender pages straight into your company documents.",
   },
   {
     question: "What industries do you support?",
